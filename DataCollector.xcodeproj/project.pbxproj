@@ -21,6 +21,9 @@
 		60190EC825E44E0500CFF045 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60190EC725E44E0500CFF045 /* ExtensionDelegate.swift */; };
 		60190ECA25E44E0500CFF045 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60190EC925E44E0500CFF045 /* ComplicationController.swift */; };
 		60190ECC25E44E0500CFF045 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60190ECB25E44E0500CFF045 /* Assets.xcassets */; };
+		6020A08B25E9A3F6004D36E8 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6020A08A25E9A3F6004D36E8 /* MotionManager.swift */; };
+		6020A09125E9A507004D36E8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6020A09025E9A507004D36E8 /* CoreMotion.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		6020A09625E9A5CE004D36E8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6020A09525E9A5CE004D36E8 /* CoreMotion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +87,9 @@
 		60190EC925E44E0500CFF045 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		60190ECB25E44E0500CFF045 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60190ECD25E44E0500CFF045 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6020A08A25E9A3F6004D36E8 /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
+		6020A09025E9A507004D36E8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.4.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		6020A09525E9A5CE004D36E8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.2.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6020A09125E9A507004D36E8 /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6020A09625E9A5CE004D36E8 /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +119,7 @@
 				60190EB525E44E0500CFF045 /* DataCollector WatchKit App */,
 				60190EC425E44E0500CFF045 /* DataCollector WatchKit Extension */,
 				60190E9E25E44E0400CFF045 /* Products */,
+				6020A08F25E9A507004D36E8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -156,8 +165,18 @@
 				60190EC925E44E0500CFF045 /* ComplicationController.swift */,
 				60190ECB25E44E0500CFF045 /* Assets.xcassets */,
 				60190ECD25E44E0500CFF045 /* Info.plist */,
+				6020A08A25E9A3F6004D36E8 /* MotionManager.swift */,
 			);
 			path = "DataCollector WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		6020A08F25E9A507004D36E8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6020A09525E9A5CE004D36E8 /* CoreMotion.framework */,
+				6020A09025E9A507004D36E8 /* CoreMotion.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,6 +323,7 @@
 				60190EC825E44E0500CFF045 /* ExtensionDelegate.swift in Sources */,
 				60190EC625E44E0500CFF045 /* InterfaceController.swift in Sources */,
 				60190ECA25E44E0500CFF045 /* ComplicationController.swift in Sources */,
+				6020A08B25E9A3F6004D36E8 /* MotionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
