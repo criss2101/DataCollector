@@ -17,8 +17,10 @@ extension Date
     }
 }
 
+
+
 protocol MotionManagerDelegate: class {
-    func updateMotionData(_ motionManager: MotionManager, gravStr: String, rotRateStr: String, userAccStr: String, attStr: String)
+    func updateMotionData(_ motionManager: MotionManager, gravCor: Cordinates, rotRateCor: Cordinates, userAccCor: Cordinates, attDes: AttitudeDes)
 }
 
 class MotionManager
@@ -26,10 +28,10 @@ class MotionManager
     //MARK: Variable initialization
     let motionManager = CMMotionManager()
     
-    var gravStr = ""
-    var rotRateStr = ""
-    var userAccStr = ""
-    var attStr = ""
+    var gravCor: Cordinates?
+    var rotRateCor: Cordinates?
+    var userAccCor: Cordinates?
+    var attDes: AttitudeDes?
     
     let sampleInterval = 1.0 / 50
     
@@ -72,34 +74,30 @@ class MotionManager
         
     func saveDeviceMotion(_ deviceMotion: CMDeviceMotion)
     {
-        gravStr = String(format: "X: %.1f Y: %.1f Z: %.1f",
-                            deviceMotion.gravity.x, deviceMotion.gravity.y, deviceMotion.gravity.y)
+        gravCor = Cordinates(x: deviceMotion.gravity.x, y: deviceMotion.gravity.y, z: deviceMotion.gravity.y)
         
-        userAccStr = String(format: "X: %.1f Y: %.1f Z: %.1f",
-                            deviceMotion.userAcceleration.x, deviceMotion.userAcceleration.y, deviceMotion.userAcceleration.y)
+        userAccCor = Cordinates(x: deviceMotion.userAcceleration.x, y: deviceMotion.userAcceleration.y, z: deviceMotion.userAcceleration.y)
 
-        attStr = String(format: "r: %.1f p: %.1f y: %.1f",
-                            deviceMotion.attitude.roll, deviceMotion.attitude.pitch, deviceMotion.attitude.yaw)
+        attDes = AttitudeDes(roll: deviceMotion.attitude.roll, pitch: deviceMotion.attitude.pitch, yaw: deviceMotion.attitude.yaw)
         
-        rotRateStr = String(format: "X: %.1f Y: %.1f Z: %.1f",
-                            deviceMotion.rotationRate.x, deviceMotion.rotationRate.y, deviceMotion.rotationRate.y)
+        rotRateCor = Cordinates(x: deviceMotion.rotationRate.x, y: deviceMotion.rotationRate.y, z: deviceMotion.rotationRate.y)
         
         let timestamp = Date().currentTimeMillis()
         
         os_log("Motion: %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@",
                String(timestamp),
-               String(deviceMotion.gravity.x),
-               String(deviceMotion.gravity.y),
-               String(deviceMotion.gravity.z),
-               String(deviceMotion.userAcceleration.x),
-               String(deviceMotion.userAcceleration.y),
-               String(deviceMotion.userAcceleration.z),
-               String(deviceMotion.rotationRate.x),
-               String(deviceMotion.rotationRate.y),
-               String(deviceMotion.rotationRate.z),
-               String(deviceMotion.attitude.roll),
-               String(deviceMotion.attitude.pitch),
-               String(deviceMotion.attitude.yaw))
+               String(gravCor!.x),
+               String(gravCor!.y),
+               String(gravCor!.z),
+               String(userAccCor!.x),
+               String(userAccCor!.y),
+               String(userAccCor!.z),
+               String(rotRateCor!.x),
+               String(rotRateCor!.y),
+               String(rotRateCor!.z),
+               String(attDes!.roll),
+               String(attDes!.pitch),
+               String(attDes!.yaw))
         
         updateMetricsDelegate()
         
@@ -107,6 +105,6 @@ class MotionManager
     
     func updateMetricsDelegate()
     {
-        delegate?.updateMotionData(self, gravStr: gravStr, rotRateStr: rotRateStr, userAccStr: userAccStr, attStr: attStr)
+        delegate?.updateMotionData(self, gravCor: gravCor!, rotRateCor: rotRateCor!, userAccCor: userAccCor!, attDes: attDes!)
     }
 }

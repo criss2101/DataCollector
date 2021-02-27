@@ -12,44 +12,128 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="DataCollector_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <label width="85" height="30" alignment="center" text="Stopped" textAlignment="center" id="imY-7u-lq7" userLabel="State">
+                        <label width="85" height="30" alignment="center" text="State" textAlignment="center" id="imY-7u-lq7" userLabel="State">
                             <color key="textColor" red="1" green="0.34784646470000002" blue="0.28448586640000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <fontDescription key="font" style="UICTFontTextStyleTitle3"/>
                         </label>
                         <label width="85" height="25" alignment="center" text="Gravity" textAlignment="center" id="529-rs-1Jr">
-                            <color key="textColor" red="0.0" green="1" blue="0.085200186410000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="textColor" red="0.0027410149956410557" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </label>
-                        <label width="136" height="25" alignment="center" text="0.0" textAlignment="center" id="6gN-M1-Ceo" userLabel="GravVal">
-                            <color key="textColor" name="AccentColor"/>
-                        </label>
+                        <group width="1" height="29" alignment="left" id="t0S-bS-tUP">
+                            <items>
+                                <label height="25" alignment="center" text="X" textAlignment="center" id="Qv1-DT-Hmu" userLabel="X">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="6gN-M1-Ceo" userLabel="GravValX">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                                <label height="25" alignment="center" text="Y" textAlignment="center" id="0iH-EB-Lwx" userLabel="Y">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="fvV-G7-qgA" userLabel="GravValY">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                                <label height="25" alignment="center" text="Z" textAlignment="center" id="sHZ-nZ-S7M" userLabel="Z">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="rjU-Me-2uq" userLabel="GravValZ">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                            </items>
+                        </group>
                         <label width="123" height="25" alignment="center" text="Acceleration" textAlignment="center" id="wl9-Kv-YZL" userLabel="Acceleration">
                             <color key="textColor" red="0.0" green="1" blue="0.085200186410000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </label>
-                        <label width="136" height="25" alignment="center" text="0.0" textAlignment="center" id="JjB-8F-Quy" userLabel="AccVal">
-                            <color key="textColor" name="AccentColor"/>
-                        </label>
+                        <group width="1" height="29" alignment="left" id="bWv-G2-e2C">
+                            <items>
+                                <label height="25" alignment="center" text="X" textAlignment="center" id="rUA-dk-uvg" userLabel="X">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="uu2-CD-rz1" userLabel="AccValX">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                                <label height="25" alignment="center" text="Y" textAlignment="center" id="jta-ln-EkV" userLabel="Y">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="93F-KJ-mQi" userLabel="AccValY">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                                <label height="25" alignment="center" text="Z" textAlignment="center" id="tPw-iH-bzG" userLabel="Z">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="ZjK-mC-JGr" userLabel="AccValZ">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                            </items>
+                        </group>
                         <label width="85" height="25" alignment="center" text="Attitude" textAlignment="center" id="kZi-ac-sfN" userLabel="Attitude">
                             <color key="textColor" red="0.0" green="1" blue="0.085200186410000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </label>
-                        <label width="136" height="25" alignment="center" text="0.0" textAlignment="center" id="q0i-ak-yzF" userLabel="AttVal">
-                            <color key="textColor" name="AccentColor"/>
-                        </label>
+                        <group width="1" height="29" alignment="left" id="ije-lF-QKr">
+                            <items>
+                                <label height="25" alignment="center" text="R" textAlignment="center" id="DVw-uh-TNr">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="htD-gH-1tG" userLabel="AttlValR">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                                <label height="25" alignment="center" text="P" textAlignment="center" id="DLZ-0C-vUk" userLabel="P">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="Ceo-Et-ap3" userLabel="AttValP">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                                <label height="25" alignment="center" text="Y" textAlignment="center" id="8X0-gG-UHU" userLabel="Y">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="783-KH-yHf" userLabel="AttValY">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                            </items>
+                        </group>
                         <label width="85" height="25" alignment="center" text="Rotation" textAlignment="center" id="tm6-KG-Lfc">
                             <color key="textColor" red="0.0" green="1" blue="0.085200186410000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </label>
-                        <label width="136" height="25" alignment="center" text="0.0" textAlignment="center" id="PVl-nh-5lT" userLabel="RotVal">
-                            <color key="textColor" name="AccentColor"/>
-                        </label>
+                        <group width="1" height="29" alignment="left" id="Wt2-VH-9AN">
+                            <items>
+                                <label height="25" alignment="center" text="X" textAlignment="center" id="pfj-9j-BPY" userLabel="X">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="wSC-5Q-hhC" userLabel="RotValX">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                                <label height="25" alignment="center" text="Y" textAlignment="center" id="iCA-6Y-jsh" userLabel="Y">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="0Pv-9t-FKx" userLabel="RotValY">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                                <label height="25" alignment="center" text="Z" textAlignment="center" id="sjw-zL-o1j" userLabel="Z">
+                                    <color key="textColor" red="0.0" green="1" blue="0.98775798276241966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
+                                <label width="50" height="25" alignment="center" text="0.0" textAlignment="center" id="M34-W1-qfq" userLabel="RotValZ">
+                                    <color key="textColor" name="AccentColor"/>
+                                </label>
+                            </items>
+                        </group>
                     </items>
                     <connections>
-                        <outlet property="accLabel" destination="JjB-8F-Quy" id="bFH-1R-fd0"/>
-                        <outlet property="attLabel" destination="q0i-ak-yzF" id="pUA-Cr-en3"/>
-                        <outlet property="gravLabel" destination="6gN-M1-Ceo" id="3kv-fo-OoX"/>
-                        <outlet property="rotLabel" destination="PVl-nh-5lT" id="LUf-4o-QCe"/>
+                        <outlet property="accLabelX" destination="uu2-CD-rz1" id="xlh-aI-Vmv"/>
+                        <outlet property="accLabelY" destination="93F-KJ-mQi" id="ch8-WT-Flq"/>
+                        <outlet property="accLabelZ" destination="ZjK-mC-JGr" id="1Jp-U3-UPg"/>
+                        <outlet property="attLabelP" destination="Ceo-Et-ap3" id="FvZ-jy-08K"/>
+                        <outlet property="attLabelR" destination="htD-gH-1tG" id="a1c-U8-Izn"/>
+                        <outlet property="attLabelY" destination="783-KH-yHf" id="wHW-hA-ICk"/>
+                        <outlet property="gravLabelX" destination="6gN-M1-Ceo" id="CK7-NR-R80"/>
+                        <outlet property="gravLabelY" destination="fvV-G7-qgA" id="55I-N8-fag"/>
+                        <outlet property="gravLabelZ" destination="rjU-Me-2uq" id="Bay-IJ-j6A"/>
+                        <outlet property="rotLabelX" destination="wSC-5Q-hhC" id="pKi-39-Dmh"/>
+                        <outlet property="rotLabelY" destination="0Pv-9t-FKx" id="ite-se-GHC"/>
+                        <outlet property="rotLabelZ" destination="M34-W1-qfq" id="jkt-g6-bDZ"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-175.17391304347825" y="-20.870535714285715"/>
+            <point key="canvasLocation" x="-175.17391304347825" y="-10.245535714285715"/>
         </scene>
     </scenes>
     <resources>

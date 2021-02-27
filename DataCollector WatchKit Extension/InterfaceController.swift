@@ -12,19 +12,31 @@ import Foundation
 class InterfaceController: WKInterfaceController, MotionManagerDelegate {
 
     
-    @IBOutlet weak var gravLabel: WKInterfaceLabel!
-    @IBOutlet weak var accLabel: WKInterfaceLabel!
-    @IBOutlet weak var attLabel: WKInterfaceLabel!
-    @IBOutlet weak var rotLabel: WKInterfaceLabel!
+    @IBOutlet weak var gravLabelX: WKInterfaceLabel!
+    @IBOutlet weak var gravLabelY: WKInterfaceLabel!
+    @IBOutlet weak var gravLabelZ: WKInterfaceLabel!
     
-    var gravStr = ""
-    var accStr = ""
-    var attStr = ""
-    var rotStr = ""
+    @IBOutlet weak var accLabelX: WKInterfaceLabel!
+    @IBOutlet weak var accLabelY: WKInterfaceLabel!
+    @IBOutlet weak var accLabelZ: WKInterfaceLabel!
     
+    @IBOutlet weak var rotLabelX: WKInterfaceLabel!
+    @IBOutlet weak var rotLabelY: WKInterfaceLabel!
+    @IBOutlet weak var rotLabelZ: WKInterfaceLabel!
+    
+    @IBOutlet weak var attLabelR: WKInterfaceLabel!
+    @IBOutlet weak var attLabelP: WKInterfaceLabel!
+    @IBOutlet weak var attLabelY: WKInterfaceLabel!
+    
+    var gravCor: Cordinates?
+    var rotRateCor: Cordinates?
+    var userAccCor: Cordinates?
+    var attDes: AttitudeDes?
+        
     
     let motionManager = MotionManager()
     var active = false
+    var isStarted = false
     
     override init()
     {
@@ -33,26 +45,38 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate {
         motionManager.startMeasurement()
     }
     
-    func updateMotionData(_ motionManager: MotionManager, gravStr: String, rotRateStr: String, userAccStr: String, attStr: String)
+    func updateMotionData(_ motionManager: MotionManager, gravCor: Cordinates, rotRateCor: Cordinates, userAccCor: Cordinates, attDes: AttitudeDes)
     {
         DispatchQueue.main.async
         {
-            self.gravStr = gravStr
-            self.accStr = userAccStr
-            self.rotStr = rotRateStr
-            self.attStr = attStr
+            self.gravCor = gravCor
+            self.rotRateCor = rotRateCor
+            self.userAccCor = userAccCor
+            self.attDes = attDes
+            self.isStarted = true
             self.updateLabels()
         }
     }
     
     func updateLabels()
     {
-        if active
+        if active && isStarted
         {
-            self.gravLabel.setText(gravStr)
-            self.accLabel.setText(accStr)
-            self.rotLabel.setText(rotStr)
-            self.attLabel.setText(attStr)
+            self.gravLabelX.setText(String(format: "%.2f", gravCor!.x))
+            self.gravLabelY.setText(String(format: "%.2f",gravCor!.y))
+            self.gravLabelZ.setText(String(format: "%.2f",gravCor!.z))
+            
+            self.rotLabelX.setText(String(format: "%.2f",rotRateCor!.x))
+            self.rotLabelY.setText(String(format: "%.2f",rotRateCor!.y))
+            self.rotLabelZ.setText(String(format: "%.2f",rotRateCor!.z))
+            
+            self.accLabelX.setText(String(format: "%.2f",userAccCor!.x))
+            self.accLabelY.setText(String(format: "%.2f",userAccCor!.y))
+            self.accLabelZ.setText(String(format: "%.2f",userAccCor!.z))
+            
+            self.attLabelR.setText(String(format: "%.2f",attDes!.roll))
+            self.attLabelP.setText(String(format: "%.2f",attDes!.pitch))
+            self.attLabelY.setText(String(format: "%.2f",attDes!.yaw))
         }
     }
     
