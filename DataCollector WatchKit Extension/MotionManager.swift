@@ -17,15 +17,14 @@ extension Date
     }
 }
 
-
-
-protocol MotionManagerDelegate: class {
+protocol MotionManagerDelegate: class
+{
     func updateMotionData(_ motionManager: MotionManager, gravCor: Cordinates, rotRateCor: Cordinates, userAccCor: Cordinates, attDes: AttitudeDes)
 }
 
 class MotionManager
 {
-    //MARK: Variable initialization
+    //MARK: Variable
     let motionManager = CMMotionManager()
     
     var gravCor: Cordinates?
@@ -66,6 +65,7 @@ class MotionManager
     
     func stopMeasurement()
     {
+        os_log("Stop measurement!");
         if motionManager.isDeviceMotionAvailable
         {
             motionManager.stopDeviceMotionUpdates()
@@ -84,26 +84,25 @@ class MotionManager
         
         let timestamp = Date().currentTimeMillis()
         
-        os_log("Motion: %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@",
-               String(timestamp),
-               String(gravCor!.x),
-               String(gravCor!.y),
-               String(gravCor!.z),
-               String(userAccCor!.x),
-               String(userAccCor!.y),
-               String(userAccCor!.z),
-               String(rotRateCor!.x),
-               String(rotRateCor!.y),
-               String(rotRateCor!.z),
-               String(attDes!.roll),
-               String(attDes!.pitch),
-               String(attDes!.yaw))
+//        os_log("Motion: %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@",
+//               String(timestamp),
+//               String(gravCor!.x),
+//               String(gravCor!.y),
+//               String(gravCor!.z),
+//               String(userAccCor!.x),
+//               String(userAccCor!.y),
+//               String(userAccCor!.z),
+//               String(rotRateCor!.x),
+//               String(rotRateCor!.y),
+//               String(rotRateCor!.z),
+//               String(attDes!.roll),
+//               String(attDes!.pitch),
+//               String(attDes!.yaw))
         
-        updateMetricsDelegate()
-        
+        updateMetricsDelegate(timestamp)
     }
     
-    func updateMetricsDelegate()
+    func updateMetricsDelegate(_ timeStamp: Int64)
     {
         delegate?.updateMotionData(self, gravCor: gravCor!, rotRateCor: rotRateCor!, userAccCor: userAccCor!, attDes: attDes!)
     }

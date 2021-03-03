@@ -12,10 +12,24 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="DataCollector_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <label width="85" height="30" alignment="center" text="State" textAlignment="center" id="imY-7u-lq7" userLabel="State">
-                            <color key="textColor" red="1" green="0.34784646470000002" blue="0.28448586640000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <fontDescription key="font" style="UICTFontTextStyleTitle3"/>
-                        </label>
+                        <group width="1" alignment="left" id="UO7-Vu-dhU">
+                            <items>
+                                <button width="0.5" alignment="left" title="Start" id="Pn3-aZ-dlR" userLabel="StartButton">
+                                    <color key="titleColor" red="0.0" green="0.85136114689999998" blue="0.072536128419999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="backgroundColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <connections>
+                                        <action selector="start" destination="AgC-eL-Hgc" id="neH-iB-7Ss"/>
+                                    </connections>
+                                </button>
+                                <button width="0.5" alignment="left" title="Stop" id="pPd-gy-eyI" userLabel="StopButton">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" red="0.29803921568627451" green="0.29803921568627451" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <connections>
+                                        <action selector="stop" destination="AgC-eL-Hgc" id="cnz-1W-0bh"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
                         <label width="85" height="25" alignment="center" text="Gravity" textAlignment="center" id="529-rs-1Jr">
                             <color key="textColor" red="0.0027410149956410557" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </label>
@@ -130,6 +144,8 @@
                         <outlet property="rotLabelX" destination="wSC-5Q-hhC" id="pKi-39-Dmh"/>
                         <outlet property="rotLabelY" destination="0Pv-9t-FKx" id="ite-se-GHC"/>
                         <outlet property="rotLabelZ" destination="M34-W1-qfq" id="jkt-g6-bDZ"/>
+                        <outlet property="startButton" destination="Pn3-aZ-dlR" id="L3z-SK-g8v"/>
+                        <outlet property="stopButton" destination="pPd-gy-eyI" id="uHx-9y-HC9"/>
                     </connections>
                 </controller>
             </objects>
