@@ -24,7 +24,8 @@
 		6020A08B25E9A3F6004D36E8 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6020A08A25E9A3F6004D36E8 /* MotionManager.swift */; };
 		6020A09125E9A507004D36E8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6020A09025E9A507004D36E8 /* CoreMotion.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6020A09625E9A5CE004D36E8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6020A09525E9A5CE004D36E8 /* CoreMotion.framework */; };
-		60E0E19725EAA1770020C631 /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
+		60A3C4E925F5113F00683DAA /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
+		60A3C4F025F518D400683DAA /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		60190E9425E44E0400CFF045 = {
 			isa = PBXGroup;
 			children = (
+				60A3C4E225F5107800683DAA /* SharedModels */,
 				60190E9F25E44E0400CFF045 /* DataCollector */,
 				60190EB525E44E0500CFF045 /* DataCollector WatchKit App */,
 				60190EC425E44E0500CFF045 /* DataCollector WatchKit Extension */,
@@ -138,6 +140,7 @@
 		60190E9F25E44E0400CFF045 /* DataCollector */ = {
 			isa = PBXGroup;
 			children = (
+				606F0DC625F03E3500784057 /* Model */,
 				60190EA025E44E0400CFF045 /* AppDelegate.swift */,
 				60190EA225E44E0400CFF045 /* SceneDelegate.swift */,
 				60190EA425E44E0400CFF045 /* ViewController.swift */,
@@ -162,13 +165,13 @@
 		60190EC425E44E0500CFF045 /* DataCollector WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				60A0A89925F4F44700E1652F /* Model */,
 				60190EC525E44E0500CFF045 /* InterfaceController.swift */,
 				60190EC725E44E0500CFF045 /* ExtensionDelegate.swift */,
 				60190EC925E44E0500CFF045 /* ComplicationController.swift */,
 				60190ECB25E44E0500CFF045 /* Assets.xcassets */,
 				60190ECD25E44E0500CFF045 /* Info.plist */,
 				6020A08A25E9A3F6004D36E8 /* MotionManager.swift */,
-				60E0E19625EAA1770020C631 /* StructsFile.swift */,
 			);
 			path = "DataCollector WatchKit Extension";
 			sourceTree = "<group>";
@@ -180,6 +183,28 @@
 				6020A09025E9A507004D36E8 /* CoreMotion.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		606F0DC625F03E3500784057 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		60A0A89925F4F44700E1652F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		60A3C4E225F5107800683DAA /* SharedModels */ = {
+			isa = PBXGroup;
+			children = (
+				60E0E19625EAA1770020C631 /* StructsFile.swift */,
+			);
+			path = SharedModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,6 +338,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60A3C4F025F518D400683DAA /* StructsFile.swift in Sources */,
 				60190EA525E44E0400CFF045 /* ViewController.swift in Sources */,
 				60190EA125E44E0400CFF045 /* AppDelegate.swift in Sources */,
 				60190EA325E44E0400CFF045 /* SceneDelegate.swift in Sources */,
@@ -327,7 +353,7 @@
 				60190EC625E44E0500CFF045 /* InterfaceController.swift in Sources */,
 				60190ECA25E44E0500CFF045 /* ComplicationController.swift in Sources */,
 				6020A08B25E9A3F6004D36E8 /* MotionManager.swift in Sources */,
-				60E0E19725EAA1770020C631 /* StructsFile.swift in Sources */,
+				60A3C4E925F5113F00683DAA /* StructsFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

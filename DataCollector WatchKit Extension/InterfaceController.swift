@@ -7,9 +7,10 @@
 
 import WatchKit
 import Foundation
+import WatchConnectivity
 
 
-class InterfaceController: WKInterfaceController, MotionManagerDelegate
+class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessionDelegate
 {
     //MARK: Variable
     @IBOutlet weak var gravLabelX: WKInterfaceLabel!
@@ -32,12 +33,14 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate
     @IBOutlet weak var stopButton: WKInterfaceButton!
     
     
-    var gravCor: Cordinates?
-    var rotRateCor: Cordinates?
-    var userAccCor: Cordinates?
-    var attDes: AttitudeDes?
+    var gravData: Cordinates?
+    var rotRateData: Cordinates?
+    var userAccData: Cordinates?
+    var attData: AttCordinates?
+    var sensorDataContainter: [SensorData] = []
         
     let motionManager = MotionManager()
+    let session = WCSession.default
     var active = false
     var isStarted = false
     
@@ -47,6 +50,8 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate
     {
         super.init()
         motionManager.delegate = self
+        session.delegate = self
+        session.activate()
     }
     
     override func willActivate()
@@ -62,14 +67,16 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate
         active = false
     }
     
-    func updateMotionData(_ motionManager: MotionManager, gravCor: Cordinates, rotRateCor: Cordinates, userAccCor: Cordinates, attDes: AttitudeDes)
+    func updateMotionData(_ motionManager: MotionManager, sensorData: SensorData)
     {
         DispatchQueue.main.async
         {
-            self.gravCor = gravCor
-            self.rotRateCor = rotRateCor
-            self.userAccCor = userAccCor
-            self.attDes = attDes
+            self.sensorDataContainter.append(sensorData)
+            self.gravData = sensorData.gravData
+            self.rotRateData = sensorData.rotRateData
+            self.userAccData = sensorData.userAccData
+            self.attData = sensorData.attData
+            
             self.updateLabels()
         }
     }
@@ -78,26 +85,27 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate
     {
         if active && isStarted
         {
-            self.gravLabelX.setText(String(format: "%.2f", gravCor!.x))
-            self.gravLabelY.setText(String(format: "%.2f", gravCor!.y))
-            self.gravLabelZ.setText(String(format: "%.2f", gravCor!.z))
+            self.gravLabelX.setText(String(format: "%.2f", gravData!.x))
+            self.gravLabelY.setText(String(format: "%.2f", gravData!.y))
+            self.gravLabelZ.setText(String(format: "%.2f", gravData!.z))
             
-            self.rotLabelX.setText(String(format: "%.2f", rotRateCor!.x))
-            self.rotLabelY.setText(String(format: "%.2f", rotRateCor!.y))
-            self.rotLabelZ.setText(String(format: "%.2f", rotRateCor!.z))
+            self.rotLabelX.setText(String(format: "%.2f", rotRateData!.x))
+            self.rotLabelY.setText(String(format: "%.2f", rotRateData!.y))
+            self.rotLabelZ.setText(String(format: "%.2f", rotRateData!.z))
             
-            self.accLabelX.setText(String(format: "%.2f", userAccCor!.x))
-            self.accLabelY.setText(String(format: "%.2f", userAccCor!.y))
-            self.accLabelZ.setText(String(format: "%.2f", userAccCor!.z))
+            self.accLabelX.setText(String(format: "%.2f", userAccData!.x))
+            self.accLabelY.setText(String(format: "%.2f", userAccData!.y))
+            self.accLabelZ.setText(String(format: "%.2f", userAccData!.z))
             
-            self.attLabelR.setText(String(format: "%.2f", attDes!.roll))
-            self.attLabelP.setText(String(format: "%.2f", attDes!.pitch))
-            self.attLabelY.setText(String(format: "%.2f", attDes!.yaw))
+            self.attLabelR.setText(String(format: "%.2f", attData!.roll))
+            self.attLabelP.setText(String(format: "%.2f", attData!.pitch))
+            self.attLabelY.setText(String(format: "%.2f", attData!.yaw))
         }
     }
     
     @IBAction func start()
     {
+        self.sensorDataContainter.removeAll(keepingCapacity: true) // Is it improvement ?
         isStarted = true
         motionManager.startMeasurement()
         stopButton.setBackgroundColor(#colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1))
@@ -106,10 +114,25 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate
     
     @IBAction func stop()
     {
-        motionManager.stopMeasurement()
-        isStarted = false
-        startButton.setBackgroundColor(#colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1))
-        stopButton.setBackgroundColor(#colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1))
+        if isStarted
+        {
+            motionManager.stopMeasurement()
+            isStarted = false
+            startButton.setBackgroundColor(#colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1))
+            stopButton.setBackgroundColor(#colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1))
+            saveCollectedData()
+        }
+        
     }
     
+    func saveCollectedData()
+    {
+        if let data = try? JSONEncoder().encode(sensorDataContainter)
+        {
+            session.sendMessageData(data, replyHandler: nil, errorHandler: nil)
+        }
+    }
+    
+    //MARK: Session
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
 }

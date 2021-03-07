@@ -19,18 +19,13 @@ extension Date
 
 protocol MotionManagerDelegate: class
 {
-    func updateMotionData(_ motionManager: MotionManager, gravCor: Cordinates, rotRateCor: Cordinates, userAccCor: Cordinates, attDes: AttitudeDes)
+    func updateMotionData(_ motionManager: MotionManager, sensorData: SensorData)
 }
 
 class MotionManager
 {
     //MARK: Variable
     let motionManager = CMMotionManager()
-    
-    var gravCor: Cordinates?
-    var rotRateCor: Cordinates?
-    var userAccCor: Cordinates?
-    var attDes: AttitudeDes?
     
     let sampleInterval = 1.0 / 50
     
@@ -74,36 +69,21 @@ class MotionManager
         
     func saveDeviceMotion(_ deviceMotion: CMDeviceMotion)
     {
-        gravCor = Cordinates(x: deviceMotion.gravity.x, y: deviceMotion.gravity.y, z: deviceMotion.gravity.y)
-        
-        userAccCor = Cordinates(x: deviceMotion.userAcceleration.x, y: deviceMotion.userAcceleration.y, z: deviceMotion.userAcceleration.y)
-
-        attDes = AttitudeDes(roll: deviceMotion.attitude.roll, pitch: deviceMotion.attitude.pitch, yaw: deviceMotion.attitude.yaw)
-        
-        rotRateCor = Cordinates(x: deviceMotion.rotationRate.x, y: deviceMotion.rotationRate.y, z: deviceMotion.rotationRate.y)
-        
         let timestamp = Date().currentTimeMillis()
         
-//        os_log("Motion: %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@, %@",
-//               String(timestamp),
-//               String(gravCor!.x),
-//               String(gravCor!.y),
-//               String(gravCor!.z),
-//               String(userAccCor!.x),
-//               String(userAccCor!.y),
-//               String(userAccCor!.z),
-//               String(rotRateCor!.x),
-//               String(rotRateCor!.y),
-//               String(rotRateCor!.z),
-//               String(attDes!.roll),
-//               String(attDes!.pitch),
-//               String(attDes!.yaw))
+        let gravData = Cordinates(x: deviceMotion.gravity.x, y: deviceMotion.gravity.y, z: deviceMotion.gravity.y)
         
-        updateMetricsDelegate(timestamp)
+        let userAccData = Cordinates(x: deviceMotion.userAcceleration.x, y: deviceMotion.userAcceleration.y, z: deviceMotion.userAcceleration.y)
+
+        let attData = AttCordinates(roll: deviceMotion.attitude.roll, pitch: deviceMotion.attitude.pitch, yaw: deviceMotion.attitude.yaw)
+        
+        let rotRateData = Cordinates(x: deviceMotion.rotationRate.x, y: deviceMotion.rotationRate.y, z: deviceMotion.rotationRate.y)
+        
+        updateMetricsDelegate(SensorData(timeStamp: timestamp, gravData: gravData, userAccData: userAccData, attData: attData, rotRateData: rotRateData))
     }
     
-    func updateMetricsDelegate(_ timeStamp: Int64)
+    func updateMetricsDelegate(_ sensorData: SensorData)
     {
-        delegate?.updateMotionData(self, gravCor: gravCor!, rotRateCor: rotRateCor!, userAccCor: userAccCor!, attDes: attDes!)
+        delegate?.updateMotionData(self, sensorData: sensorData)
     }
 }
