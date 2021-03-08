@@ -105,7 +105,7 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
     
     @IBAction func start()
     {
-        self.sensorDataContainter.removeAll(keepingCapacity: true) // Is it improvement ?
+        self.sensorDataContainter.removeAll(keepingCapacity: false)
         isStarted = true
         motionManager.startMeasurement()
         stopButton.setBackgroundColor(#colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1))
@@ -122,14 +122,24 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
             stopButton.setBackgroundColor(#colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1))
             saveCollectedData()
         }
-        
     }
     
     func saveCollectedData()
     {
         if let data = try? JSONEncoder().encode(sensorDataContainter)
         {
-            session.sendMessageData(data, replyHandler: nil, errorHandler: nil)
+            let path = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let newFilePath = path?.appendingPathComponent("watchData")
+            
+            do
+            {
+                try data.write(to: newFilePath!)
+            }
+            catch
+            {
+                print("Cannot write to file" + newFilePath!.absoluteString)
+            }
+            session.transferFile(newFilePath!, metadata: nil)
         }
     }
     

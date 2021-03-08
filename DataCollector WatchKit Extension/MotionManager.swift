@@ -44,7 +44,6 @@ class MotionManager
         os_log("Start measurement!");
         
         motionManager.deviceMotionUpdateInterval = sampleInterval
-        
         motionManager.startDeviceMotionUpdates(to: OperationQueue()) { (deviceMotion: CMDeviceMotion?, err: Error?) in
             if err != nil
             {
@@ -73,7 +72,7 @@ class MotionManager
         
         let gravData = Cordinates(x: deviceMotion.gravity.x, y: deviceMotion.gravity.y, z: deviceMotion.gravity.y)
         
-        let userAccData = Cordinates(x: deviceMotion.userAcceleration.x, y: deviceMotion.userAcceleration.y, z: deviceMotion.userAcceleration.y)
+        let userAccData = Cordinates(x: deviceMotion.userAcceleration.x, y: deviceMotion.userAcceleration.y, z: deviceMotion.userAcceleration.z)
 
         let attData = AttCordinates(roll: deviceMotion.attitude.roll, pitch: deviceMotion.attitude.pitch, yaw: deviceMotion.attitude.yaw)
         

@@ -36,11 +36,12 @@ class ViewController: UIViewController, WCSessionDelegate
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
     
-    func session(_ session: WCSession, didReceiveMessageData message: Data)
+    func session(_ session: WCSession, didReceive file: WCSessionFile)
     {
         DispatchQueue.main.async
         {
-            if let receivedData = try? JSONDecoder().decode([SensorData].self, from: message)
+            let data = try? Data(contentsOf: file.fileURL)
+            if let receivedData = try? JSONDecoder().decode([SensorData].self, from: data!)
             {
                 self.label.text = String(receivedData.capacity)
             }
