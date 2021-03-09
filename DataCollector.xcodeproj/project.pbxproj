@@ -26,6 +26,7 @@
 		6020A09625E9A5CE004D36E8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6020A09525E9A5CE004D36E8 /* CoreMotion.framework */; };
 		60A3C4E925F5113F00683DAA /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
 		60A3C4F025F518D400683DAA /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
+		60AA239225F8164100540E3B /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6020A08A25E9A3F6004D36E8 /* MotionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -339,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60A3C4F025F518D400683DAA /* StructsFile.swift in Sources */,
+				60AA239225F8164100540E3B /* MotionManager.swift in Sources */,
 				60190EA525E44E0400CFF045 /* ViewController.swift in Sources */,
 				60190EA125E44E0400CFF045 /* AppDelegate.swift in Sources */,
 				60190EA325E44E0400CFF045 /* SceneDelegate.swift in Sources */,

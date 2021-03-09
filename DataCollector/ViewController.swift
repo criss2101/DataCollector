@@ -7,15 +7,24 @@
 
 import UIKit
 import WatchConnectivity
+import os.log
 
-class ViewController: UIViewController, WCSessionDelegate
+class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
 {
-    var session: WCSession?
-    
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var label: UILabel!
+    
+    var isStarted = false
+    var sensorDataContainter: [SensorData] = []
+    var session: WCSession?
+    let motionManager = MotionManager()
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        motionManager.delegate = self
         self.configureWatchSession()
     }
     
@@ -45,6 +54,37 @@ class ViewController: UIViewController, WCSessionDelegate
             {
                 self.label.text = String(receivedData.capacity)
             }
+        }
+    }
+    
+    func updateMotionData(_ motionManager: MotionManager, sensorData: SensorData)
+    {
+        DispatchQueue.main.async
+        {
+            self.label.text = String(format: "X = %@, Y = %@, Z = %@",
+                                String(sensorData.rotRateData.x),
+                                String(sensorData.rotRateData.y),
+                                String(sensorData.rotRateData.z))
+        }
+    }
+    
+    @IBAction func start()
+    {
+        self.sensorDataContainter.removeAll(keepingCapacity: false)
+        isStarted = true
+        motionManager.startMeasurement()
+        stopButton.backgroundColor = #colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1)
+        startButton.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1)
+    }
+    
+    @IBAction func stop()
+    {
+        if isStarted
+        {
+            motionManager.stopMeasurement()
+            isStarted = false
+            startButton.backgroundColor = #colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1)
+            stopButton.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1)
         }
     }
 
