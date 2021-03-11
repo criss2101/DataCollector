@@ -11,12 +11,34 @@ import os.log
 
 class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
 {
+    //MARK: Variable
+    @IBOutlet weak var gravLabelX: UILabel!
+    @IBOutlet weak var gravLabelY: UILabel!
+    @IBOutlet weak var gravLabelZ: UILabel!
+    
+    @IBOutlet weak var accLabelX: UILabel!
+    @IBOutlet weak var accLabelY: UILabel!
+    @IBOutlet weak var accLabelZ: UILabel!
+    
+    @IBOutlet weak var rotLabelX: UILabel!
+    @IBOutlet weak var rotLabelY: UILabel!
+    @IBOutlet weak var rotLabelZ: UILabel!
+    
+    @IBOutlet weak var attLabelR: UILabel!
+    @IBOutlet weak var attLabelP: UILabel!
+    @IBOutlet weak var attLabelY: UILabel!
+    
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var label: UILabel!
+    
+    
+    var gravData: Cordinates?
+    var rotRateData: Cordinates?
+    var userAccData: Cordinates?
+    var attData: AttCordinates?
+    var sensorDataContainter: [SensorData] = []
     
     var isStarted = false
-    var sensorDataContainter: [SensorData] = []
     var session: WCSession?
     let motionManager = MotionManager()
     
@@ -52,7 +74,7 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
             let data = try? Data(contentsOf: file.fileURL)
             if let receivedData = try? JSONDecoder().decode([SensorData].self, from: data!)
             {
-                self.label.text = String(receivedData.capacity)
+                print("Received DATA = " + String(receivedData.capacity))
             }
         }
     }
@@ -61,10 +83,35 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
     {
         DispatchQueue.main.async
         {
-            self.label.text = String(format: "X = %@, Y = %@, Z = %@",
-                                String(sensorData.rotRateData.x),
-                                String(sensorData.rotRateData.y),
-                                String(sensorData.rotRateData.z))
+            self.sensorDataContainter.append(sensorData)
+            self.gravData = sensorData.gravData
+            self.rotRateData = sensorData.rotRateData
+            self.userAccData = sensorData.userAccData
+            self.attData = sensorData.attData
+            
+            self.updateLabels()
+        }
+    }
+    
+    func updateLabels()
+    {
+        if isStarted
+        {
+            self.gravLabelX.text = String(format: "%.4f", gravData!.x)
+            self.gravLabelY.text = String(format: "%.4f", gravData!.y)
+            self.gravLabelZ.text = String(format: "%.4f", gravData!.z)
+            
+            self.rotLabelX.text = String(format: "%.4f", rotRateData!.x)
+            self.rotLabelY.text = String(format: "%.4f", rotRateData!.y)
+            self.rotLabelZ.text = String(format: "%.4f", rotRateData!.z)
+            
+            self.accLabelX.text = String(format: "%.4f", userAccData!.x)
+            self.accLabelY.text = String(format: "%.4f", userAccData!.y)
+            self.accLabelZ.text = String(format: "%.4f", userAccData!.z)
+            
+            self.attLabelR.text = String(format: "%.4f", attData!.roll)
+            self.attLabelP.text = String(format: "%.4f", attData!.pitch)
+            self.attLabelY.text = String(format: "%.4f", attData!.yaw)
         }
     }
     
