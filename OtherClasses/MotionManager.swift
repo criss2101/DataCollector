@@ -70,13 +70,13 @@ class MotionManager
     {
         let timestamp = Date().currentTimeMillis()
         
-        let gravData = Cordinates(x: deviceMotion.gravity.x, y: deviceMotion.gravity.y, z: deviceMotion.gravity.y)
+        let gravData = Cordinates(x: deviceMotion.gravity.x, y: deviceMotion.gravity.y, z: deviceMotion.gravity.z)
         
         let userAccData = Cordinates(x: deviceMotion.userAcceleration.x, y: deviceMotion.userAcceleration.y, z: deviceMotion.userAcceleration.z)
 
         let attData = AttCordinates(roll: deviceMotion.attitude.roll, pitch: deviceMotion.attitude.pitch, yaw: deviceMotion.attitude.yaw)
         
-        let rotRateData = Cordinates(x: deviceMotion.rotationRate.x, y: deviceMotion.rotationRate.y, z: deviceMotion.rotationRate.y)
+        let rotRateData = Cordinates(x: deviceMotion.rotationRate.x, y: deviceMotion.rotationRate.y, z: deviceMotion.rotationRate.z)
         
         updateMetricsDelegate(SensorData(timeStamp: timestamp, gravData: gravData, userAccData: userAccData, attData: attData, rotRateData: rotRateData))
     }

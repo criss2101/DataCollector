@@ -41,13 +41,20 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
     var isStarted = false
     var session: WCSession?
     let motionManager = MotionManager()
+    @IBOutlet weak var KeyboardInput: UITextField!
     
     
+    //MARK: Configuration
     override func viewDidLoad()
     {
         super.viewDidLoad()
         motionManager.delegate = self
         self.configureWatchSession()
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        KeyboardInput.becomeFirstResponder()
     }
     
     func configureWatchSession()
@@ -72,13 +79,21 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
         DispatchQueue.main.async
         {
             let data = try? Data(contentsOf: file.fileURL)
-            if let receivedData = try? JSONDecoder().decode([SensorData].self, from: data!)
+            if let watchData = try? JSONDecoder().decode([SensorData].self, from: data!)
             {
-                print("Received DATA = " + String(receivedData.capacity))
+                if !self.sensorDataContainter.isEmpty
+                {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+                    let now = Date()
+                    let dateString = dateFormatter.string(from:now)
+                    DataManager.connectSensorDataAndSave(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                }
             }
         }
     }
     
+    //MARK: Functions
     func updateMotionData(_ motionManager: MotionManager, sensorData: SensorData)
     {
         DispatchQueue.main.async
@@ -122,6 +137,11 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
         motionManager.startMeasurement()
         stopButton.backgroundColor = #colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1)
         startButton.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1)
+        
+        let startCollectDataOnWatch = ["info" : "START"]
+        session?.sendMessage(startCollectDataOnWatch, replyHandler: nil, errorHandler: { (err) in
+            print(err.localizedDescription)
+        })
     }
     
     @IBAction func stop()
@@ -132,6 +152,12 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
             isStarted = false
             startButton.backgroundColor = #colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1)
             stopButton.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1)
+            
+            let stopCollectDataOnWatch = ["info" : "STOP"]
+            session?.sendMessage(stopCollectDataOnWatch, replyHandler: nil, errorHandler: { (err) in
+                print(err.localizedDescription)
+            })
+
         }
     }
 

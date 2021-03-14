@@ -120,7 +120,6 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
             isStarted = false
             startButton.setBackgroundColor(#colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1))
             stopButton.setBackgroundColor(#colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1))
-            saveCollectedData()
         }
     }
     
@@ -145,4 +144,21 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
     
     //MARK: Session
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any])
+    {
+        DispatchQueue.main.async
+        {
+            let info = message["info"] as! String
+            if info == "STOP"
+            {
+                self.stop()
+                self.saveCollectedData()
+            }
+            if info == "START"
+            {
+                self.start()
+            }
+        }
+    }
 }
