@@ -24,6 +24,8 @@
 		6020A08B25E9A3F6004D36E8 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6020A08A25E9A3F6004D36E8 /* MotionManager.swift */; };
 		6020A09125E9A507004D36E8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6020A09025E9A507004D36E8 /* CoreMotion.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6020A09625E9A5CE004D36E8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6020A09525E9A5CE004D36E8 /* CoreMotion.framework */; };
+		60784D5F26069637002EEB0D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60784D5E26069637002EEB0D /* HealthKit.framework */; };
+		60784D652606964E002EEB0D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60784D642606964E002EEB0D /* HealthKit.framework */; };
 		60A3C4E925F5113F00683DAA /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
 		60A3C4F025F518D400683DAA /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
 		60AA239225F8164100540E3B /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6020A08A25E9A3F6004D36E8 /* MotionManager.swift */; };
@@ -95,6 +97,10 @@
 		6020A08A25E9A3F6004D36E8 /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
 		6020A09025E9A507004D36E8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.4.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		6020A09525E9A5CE004D36E8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.2.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		60784D5D26069637002EEB0D /* DataCollector WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "DataCollector WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		60784D5E26069637002EEB0D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.2.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
+		60784D632606964E002EEB0D /* DataCollector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DataCollector.entitlements; sourceTree = "<group>"; };
+		60784D642606964E002EEB0D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.4.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		60CE9AF125FD3EA20074F805 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		60E0E19625EAA1770020C631 /* StructsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructsFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,6 +111,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6020A09125E9A507004D36E8 /* CoreMotion.framework in Frameworks */,
+				60784D652606964E002EEB0D /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +120,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6020A09625E9A5CE004D36E8 /* CoreMotion.framework in Frameworks */,
+				60784D5F26069637002EEB0D /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +153,7 @@
 		60190E9F25E44E0400CFF045 /* DataCollector */ = {
 			isa = PBXGroup;
 			children = (
+				60784D632606964E002EEB0D /* DataCollector.entitlements */,
 				60CE9AE925FD3DAD0074F805 /* Controller */,
 				60CE9AE825FD3DA10074F805 /* View */,
 				606F0DC625F03E3500784057 /* Model */,
@@ -169,6 +178,7 @@
 		60190EC425E44E0500CFF045 /* DataCollector WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				60784D5D26069637002EEB0D /* DataCollector WatchKit Extension.entitlements */,
 				60CE9AEB25FD3DF30074F805 /* Controller */,
 				60A0A89925F4F44700E1652F /* Model */,
 				60190EC725E44E0500CFF045 /* ExtensionDelegate.swift */,
@@ -182,6 +192,8 @@
 		6020A08F25E9A507004D36E8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				60784D642606964E002EEB0D /* HealthKit.framework */,
+				60784D5E26069637002EEB0D /* HealthKit.framework */,
 				6020A09525E9A5CE004D36E8 /* CoreMotion.framework */,
 				6020A09025E9A507004D36E8 /* CoreMotion.framework */,
 			);
@@ -555,6 +567,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "DataCollector WatchKit Extension/DataCollector WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5L6VP77QAC;
 				INFOPLIST_FILE = "DataCollector WatchKit Extension/Info.plist";
@@ -577,6 +590,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "DataCollector WatchKit Extension/DataCollector WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5L6VP77QAC;
 				INFOPLIST_FILE = "DataCollector WatchKit Extension/Info.plist";
@@ -642,6 +656,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DataCollector/DataCollector.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5L6VP77QAC;
 				INFOPLIST_FILE = DataCollector/Info.plist;
@@ -663,6 +678,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DataCollector/DataCollector.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5L6VP77QAC;
 				INFOPLIST_FILE = DataCollector/Info.plist;

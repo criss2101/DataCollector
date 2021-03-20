@@ -8,7 +8,7 @@
 import WatchKit
 import Foundation
 import WatchConnectivity
-
+import HealthKit
 
 class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessionDelegate
 {
@@ -40,6 +40,8 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
     var sensorDataContainter: [SensorData] = []
         
     let motionManager = MotionManager()
+    var workoutSession: HKWorkoutSession?
+    
     let session = WCSession.default
     var active = false
     var isStarted = false
@@ -52,6 +54,7 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
         motionManager.delegate = self
         session.delegate = self
         session.activate()
+        sensorDataContainter.reserveCapacity(10000)
     }
     
     override func willActivate()
@@ -106,6 +109,19 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
     @IBAction func start()
     {
         self.sensorDataContainter.removeAll(keepingCapacity: false)
+        let workoutConfiguration = HKWorkoutConfiguration()
+        workoutConfiguration.activityType = .tennis
+        workoutConfiguration.locationType = .outdoor
+
+        do
+        {
+            workoutSession = try HKWorkoutSession(healthStore: HKHealthStore(), configuration: workoutConfiguration)
+        } catch
+        {
+            fatalError("Error occured during init session !")
+        }
+        
+        workoutSession?.startActivity(with: Date())
         isStarted = true
         motionManager.startMeasurement()
         stopButton.setBackgroundColor(#colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1))
@@ -117,6 +133,7 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
         if isStarted
         {
             motionManager.stopMeasurement()
+            workoutSession?.stopActivity(with: Date())
             isStarted = false
             startButton.setBackgroundColor(#colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1))
             stopButton.setBackgroundColor(#colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1))

@@ -50,6 +50,7 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
         super.viewDidLoad()
         motionManager.delegate = self
         self.configureWatchSession()
+        sensorDataContainter.reserveCapacity(10000)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -81,7 +82,7 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
             let data = try? Data(contentsOf: file.fileURL)
             if let watchData = try? JSONDecoder().decode([SensorData].self, from: data!)
             {
-                if !self.sensorDataContainter.isEmpty
+                if !self.sensorDataContainter.isEmpty && !watchData.isEmpty
                 {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"

@@ -19,10 +19,25 @@ class DataManager
         //CAPACITY CUT
         let count = iphoneData.count < watchData.count ? iphoneData.count : watchData.count
         
+        //Find shift offset
+        var offset = 0
+        for off in 0...count-1
+        {
+            if iphoneData[off].timeStamp >= watchData[0].timeStamp
+            {
+                offset = off
+                break;
+            }
+        }
+        
         var id = 0
         for ind  in 0...count-1
         {
-            csvString.append("\(id),\(iphoneData[ind].timeStamp),\(iphoneData[ind].gravData.x),\(iphoneData[ind].gravData.y),\(iphoneData[ind].gravData.z),\(iphoneData[ind].userAccData.x),\(iphoneData[ind].userAccData.y),\(iphoneData[ind].userAccData.z),\(iphoneData[ind].attData.roll),\(iphoneData[ind].attData.pitch),\(iphoneData[ind].attData.yaw),\(iphoneData[ind].rotRateData.x),\(iphoneData[ind].rotRateData.y),\(iphoneData[ind].rotRateData.z),\(watchData[ind].timeStamp),\(watchData[ind].gravData.x),\(watchData[ind].gravData.y),\(watchData[ind].gravData.z),\(watchData[ind].userAccData.x),\(watchData[ind].userAccData.y),\(watchData[ind].userAccData.z),\(watchData[ind].attData.roll),\(watchData[ind].attData.pitch),\(watchData[ind].attData.yaw),\(watchData[ind].rotRateData.x),\(watchData[ind].rotRateData.y),\(watchData[ind].rotRateData.z)\n")
+            if ind + offset == iphoneData.count || ind == watchData.count
+            {
+                break;
+            }
+            csvString.append("\(id),\(iphoneData[ind+offset].timeStamp),\(iphoneData[ind+offset].gravData.x),\(iphoneData[ind+offset].gravData.y),\(iphoneData[ind+offset].gravData.z),\(iphoneData[ind+offset].userAccData.x),\(iphoneData[ind+offset].userAccData.y),\(iphoneData[ind+offset].userAccData.z),\(iphoneData[ind+offset].attData.roll),\(iphoneData[ind+offset].attData.pitch),\(iphoneData[ind+offset].attData.yaw),\(iphoneData[ind+offset].rotRateData.x),\(iphoneData[ind+offset].rotRateData.y),\(iphoneData[ind+offset].rotRateData.z),\(watchData[ind].timeStamp),\(watchData[ind].gravData.x),\(watchData[ind].gravData.y),\(watchData[ind].gravData.z),\(watchData[ind].userAccData.x),\(watchData[ind].userAccData.y),\(watchData[ind].userAccData.z),\(watchData[ind].attData.roll),\(watchData[ind].attData.pitch),\(watchData[ind].attData.yaw),\(watchData[ind].rotRateData.x),\(watchData[ind].rotRateData.y),\(watchData[ind].rotRateData.z)\n")
             id+=1
         }
         

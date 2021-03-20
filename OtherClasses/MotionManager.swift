@@ -27,7 +27,7 @@ class MotionManager
     //MARK: Variable
     let motionManager = CMMotionManager()
     
-    let sampleInterval = 1.0 / 50
+    let sampleInterval = 1.0 / 100
     
     weak var delegate: MotionManagerDelegate?
     
