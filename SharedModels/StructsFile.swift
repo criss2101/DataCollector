@@ -53,4 +53,12 @@ class AttCordinates: Codable
     }
 }
 
+class SettingsContainer
+{
+    var saveAllSensors: Bool = true
+    var onlyPhone: Bool = false
+    var onlyWatch: Bool = false
+    var bothDevices: Bool = true
+}
+
 

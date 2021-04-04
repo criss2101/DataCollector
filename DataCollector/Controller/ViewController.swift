@@ -37,6 +37,7 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
     var userAccData: Cordinates?
     var attData: AttCordinates?
     var sensorDataContainter: [SensorData] = []
+    var settingsContainer = SettingsContainer()
     
     var isStarted = false
     var session: WCSession?
@@ -88,7 +89,14 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                     dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
                     let now = Date()
                     let dateString = dateFormatter.string(from:now)
-                    DataManager.connectSensorDataAndSave(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                    if self.settingsContainer.saveAllSensors
+                    {
+                        DataManager.connectSensorsDataAndSaveAll(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                    }
+                    else
+                    {
+                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                    }
                 }
             }
         }
@@ -162,6 +170,13 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
         }
     }
 
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.destination is OptionsViewController
+        {
+            let vc = segue.destination as? OptionsViewController
+            vc?.settingsContainer = self.settingsContainer
+        }
+    }
 }
 

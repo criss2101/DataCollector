@@ -24,6 +24,7 @@
 		6020A08B25E9A3F6004D36E8 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6020A08A25E9A3F6004D36E8 /* MotionManager.swift */; };
 		6020A09125E9A507004D36E8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6020A09025E9A507004D36E8 /* CoreMotion.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6020A09625E9A5CE004D36E8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6020A09525E9A5CE004D36E8 /* CoreMotion.framework */; };
+		60329F28260BE1F600EFEB1E /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60329F27260BE1F600EFEB1E /* OptionsViewController.swift */; };
 		60784D5F26069637002EEB0D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60784D5E26069637002EEB0D /* HealthKit.framework */; };
 		60784D652606964E002EEB0D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60784D642606964E002EEB0D /* HealthKit.framework */; };
 		60A3C4E925F5113F00683DAA /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
@@ -97,6 +98,7 @@
 		6020A08A25E9A3F6004D36E8 /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
 		6020A09025E9A507004D36E8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.4.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		6020A09525E9A5CE004D36E8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.2.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		60329F27260BE1F600EFEB1E /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		60784D5D26069637002EEB0D /* DataCollector WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "DataCollector WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		60784D5E26069637002EEB0D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.2.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		60784D632606964E002EEB0D /* DataCollector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DataCollector.entitlements; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				60190EA425E44E0400CFF045 /* ViewController.swift */,
+				60329F27260BE1F600EFEB1E /* OptionsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				60A3C4F025F518D400683DAA /* StructsFile.swift in Sources */,
 				60CE9AF225FD3EA20074F805 /* DataManager.swift in Sources */,
 				60AA239225F8164100540E3B /* MotionManager.swift in Sources */,
+				60329F28260BE1F600EFEB1E /* OptionsViewController.swift in Sources */,
 				60190EA525E44E0400CFF045 /* ViewController.swift in Sources */,
 				60190EA125E44E0400CFF045 /* AppDelegate.swift in Sources */,
 				60190EA325E44E0400CFF045 /* SceneDelegate.swift in Sources */,

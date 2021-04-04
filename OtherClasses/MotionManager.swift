@@ -31,6 +31,8 @@ class MotionManager
     
     weak var delegate: MotionManagerDelegate?
     
+    var timeStart: Int64 = 0
+    
     
     //MARK: Function
     func startMeasurement()
@@ -55,6 +57,8 @@ class MotionManager
                 self.saveDeviceMotion(deviceMotion!)
             }
         }
+        timeStart = Date().currentTimeMillis()
+        
     }
     
     func stopMeasurement()
@@ -68,7 +72,7 @@ class MotionManager
         
     func saveDeviceMotion(_ deviceMotion: CMDeviceMotion)
     {
-        let timestamp = Date().currentTimeMillis()
+        let timestamp = Date().currentTimeMillis() - timeStart
         
         let gravData = Cordinates(x: deviceMotion.gravity.x, y: deviceMotion.gravity.y, z: deviceMotion.gravity.z)
         
