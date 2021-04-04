@@ -53,7 +53,7 @@ class AttCordinates: Codable
     }
 }
 
-class SettingsContainer
+class SettingsContainer: Codable
 {
     var saveAllSensors: Bool = true
     var onlyPhone: Bool = false

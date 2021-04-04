@@ -8,6 +8,11 @@
 import Foundation
 import UIKit
 
+protocol UpdateSettingsDelegate: class
+{
+    func updateSettingInWatch()
+}
+
 class OptionsViewController: UIViewController
 {
     var settingsContainer: SettingsContainer?
@@ -15,6 +20,7 @@ class OptionsViewController: UIViewController
     @IBOutlet weak var switchOnlyPhone: UISwitch!
     @IBOutlet weak var switchOnlyWatch: UISwitch!
     @IBOutlet weak var switchBothDevices: UISwitch!
+    var delegate: UpdateSettingsDelegate?
     
     
     override func viewDidLoad()
@@ -29,11 +35,22 @@ class OptionsViewController: UIViewController
         {
             case switchSaveAllSensor:
                 settingsContainer!.saveAllSensors = sender.isOn
+                if sender.isOn
+                {
+                    switchOnlyWatch.isOn = false
+                    settingsContainer!.onlyWatch = false
+                    switchOnlyPhone.isOn = false
+                    settingsContainer!.onlyPhone = false
+                    switchBothDevices.isOn = true
+                    settingsContainer!.bothDevices = true
+                }
                 break
             case switchOnlyPhone:
                 settingsContainer!.onlyPhone = sender.isOn
                 if sender.isOn
                 {
+                    switchSaveAllSensor.isOn = false
+                    settingsContainer?.saveAllSensors = false
                     switchOnlyWatch.isOn = false
                     settingsContainer!.onlyWatch = false
                     switchBothDevices.isOn = false
@@ -44,6 +61,8 @@ class OptionsViewController: UIViewController
                 settingsContainer!.onlyWatch = sender.isOn
                 if sender.isOn
                 {
+                    switchSaveAllSensor.isOn = false
+                    settingsContainer?.saveAllSensors = false
                     switchOnlyPhone.isOn = false
                     settingsContainer!.onlyPhone = false
                     switchBothDevices.isOn = false
@@ -73,13 +92,8 @@ class OptionsViewController: UIViewController
         switchBothDevices.isOn = settingsContainer!.bothDevices
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    override func viewDidDisappear(_ animated: Bool)
     {
-        if segue.destination is ViewController
-        {
-            let vc = segue.destination as? ViewController
-            vc?.settingsContainer = self.settingsContainer!
-        }
+        delegate?.updateSettingInWatch()
     }
-    
 }

@@ -9,8 +9,8 @@ import UIKit
 import WatchConnectivity
 import os.log
 
-class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
-{
+class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate, UpdateSettingsDelegate
+{    
     //MARK: Variable
     @IBOutlet weak var gravLabelX: UILabel!
     @IBOutlet weak var gravLabelY: UILabel!
@@ -89,13 +89,22 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                     dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
                     let now = Date()
                     let dateString = dateFormatter.string(from:now)
-                    if self.settingsContainer.saveAllSensors
+                    
+                    if self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
                     {
-                        DataManager.connectSensorsDataAndSaveAll(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                        DataManager.connectSensorsDataAndSaveAll(fileName: "AllSensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                     }
-                    else
+                    else if self.settingsContainer.bothDevices && !self.settingsContainer.saveAllSensors
                     {
                         DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                    }
+                    else if self.settingsContainer.onlyPhone
+                    {
+                        DataManager.connectSensorsDataAndSaveGyrAccOnlyPhone(fileName: "ISensorsData_\(dateString)", iphoneData: self.sensorDataContainter)
+                    }
+                    else if self.settingsContainer.onlyWatch
+                    {
+                        DataManager.connectSensorsDataAndSaveGyrAccOnlyWatch(fileName: "WSensorsData_\(dateString)", watchData: watchData)
                     }
                 }
             }
@@ -139,6 +148,25 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
         }
     }
     
+    func updateWatchSettings()
+    {
+            if let data = try? JSONEncoder().encode(settingsContainer)
+            {
+                let path = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                let newFilePath = path?.appendingPathComponent("settingsData")
+                
+                do
+                {
+                    try data.write(to: newFilePath!)
+                }
+                catch
+                {
+                    print("Cannot write to file" + newFilePath!.absoluteString)
+                }
+                session!.transferFile(newFilePath!, metadata: nil)
+            }
+    }
+    
     @IBAction func start()
     {
         self.sensorDataContainter.removeAll(keepingCapacity: false)
@@ -176,7 +204,13 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
         {
             let vc = segue.destination as? OptionsViewController
             vc?.settingsContainer = self.settingsContainer
+            vc?.delegate = self
         }
+    }
+    
+    func updateSettingInWatch()
+    {
+        updateWatchSettings()
     }
 }
 

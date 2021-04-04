@@ -38,6 +38,7 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
     var userAccData: Cordinates?
     var attData: AttCordinates?
     var sensorDataContainter: [SensorData] = []
+    var settingsContainer = SettingsContainer()
         
     let motionManager = MotionManager()
     var workoutSession: HKWorkoutSession?
@@ -178,4 +179,17 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
             }
         }
     }
+    
+    func session(_ session: WCSession, didReceive file: WCSessionFile)
+    {
+        DispatchQueue.main.async
+        {
+            let data = try? Data(contentsOf: file.fileURL)
+            if let settngsData = try? JSONDecoder().decode(SettingsContainer.self, from: data!)
+            {
+                self.settingsContainer = settngsData
+            }
+        }
+    }
+    
 }

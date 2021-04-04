@@ -55,7 +55,7 @@ class DataManager
     static func connectSensorsDataAndSaveGyrAcc(fileName: String, iphoneData: [SensorData], watchData: [SensorData])
     {
         var csvString = """
-            Itimestamp,IaccelerationX,IaccelerationY,IaccelerationZ,IattitudeRoll,IattitudePitch,IattitudeYaw,Wtimestamp,WaccelerationX,WaccelerationY,WaccelerationZ,WattitudeRoll,WattitudePitch,WattitudeYaw\n
+            Itimestamp,IaccelerationX,IaccelerationY,IaccelerationZ,IrotationX,IrotationY,IrotationZ,Wtimestamp,WaccelerationX,WaccelerationY,WaccelerationZ,WrotationX,WrotationY,WrotationZ\n
             """
         
         //CAPACITY CUT
@@ -78,7 +78,51 @@ class DataManager
             {
                 break;
             }
-            csvString.append("\(iphoneData[ind+offset].timeStamp),\(iphoneData[ind+offset].userAccData.x),\(iphoneData[ind+offset].userAccData.y),\(iphoneData[ind+offset].userAccData.z),\(iphoneData[ind+offset].attData.roll),\(iphoneData[ind+offset].attData.pitch),\(iphoneData[ind+offset].attData.yaw),\(watchData[ind].timeStamp),\(watchData[ind].userAccData.x),\(watchData[ind].userAccData.y),\(watchData[ind].userAccData.z),\(watchData[ind].attData.roll),\(watchData[ind].attData.pitch),\(watchData[ind].attData.yaw)\n")
+            csvString.append("\(iphoneData[ind+offset].timeStamp),\(iphoneData[ind+offset].userAccData.x),\(iphoneData[ind+offset].userAccData.y),\(iphoneData[ind+offset].userAccData.z),\(iphoneData[ind+offset].rotRateData.x),\(iphoneData[ind+offset].rotRateData.y),\(iphoneData[ind+offset].rotRateData.z),\(watchData[ind].timeStamp),\(watchData[ind].userAccData.x),\(watchData[ind].userAccData.y),\(watchData[ind].userAccData.z),\(watchData[ind].rotRateData.x),\(watchData[ind].rotRateData.y),\(watchData[ind].rotRateData.z)\n")
+        }
+        
+        let path = FileManager.default.urls(for: .documentDirectory, in: .allDomainsMask).first!
+        let fileUrl = path.appendingPathComponent(fileName + ".csv")
+        do
+        {
+            try csvString.write(to: fileUrl, atomically: true, encoding: .utf8)
+            
+        }catch{
+            print(error.localizedDescription)
+        }
+    }
+    
+    static func connectSensorsDataAndSaveGyrAccOnlyPhone(fileName: String, iphoneData: [SensorData])
+    {
+        var csvString = """
+            Itimestamp,IaccelerationX,IaccelerationY,IaccelerationZ,IrotationX,IrotationY,IrotationZ\n
+            """
+        
+        for data in iphoneData
+        {
+            csvString.append("\(data.timeStamp),\(data.userAccData.x),\(data.userAccData.y),\(data.userAccData.z),\(data.rotRateData.x),\(data.rotRateData.y),\(data.rotRateData.z)\n")
+        }
+        
+        let path = FileManager.default.urls(for: .documentDirectory, in: .allDomainsMask).first!
+        let fileUrl = path.appendingPathComponent(fileName + ".csv")
+        do
+        {
+            try csvString.write(to: fileUrl, atomically: true, encoding: .utf8)
+            
+        }catch{
+            print(error.localizedDescription)
+        }
+    }
+    
+    static func connectSensorsDataAndSaveGyrAccOnlyWatch(fileName: String, watchData: [SensorData])
+    {
+        var csvString = """
+            Wtimestamp,WaccelerationX,WaccelerationY,WaccelerationZ,WrotationX,WrotationY,WrotationZ\n
+            """
+
+        for data in watchData
+        {
+            csvString.append("\(data.timeStamp),\(data.userAccData.x),\(data.userAccData.y),\(data.userAccData.z),\(data.rotRateData.x),\(data.rotRateData.y),\(data.rotRateData.z)\n")
         }
         
         let path = FileManager.default.urls(for: .documentDirectory, in: .allDomainsMask).first!
