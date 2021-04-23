@@ -35,9 +35,11 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
     var gravData: Cordinates?
     var rotRateData: Cordinates?
     var userAccData: Cordinates?
-    var attData: AttCordinates?
+    var attData: Cordinates?
     var sensorDataContainter: [SensorData] = []
     var settingsContainer = SettingsContainer()
+    let preprocessor = Preprocessor()
+    
     
     var isStarted = false
     var session: WCSession?
@@ -90,20 +92,35 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                     let now = Date()
                     let dateString = dateFormatter.string(from:now)
                     
+                    
                     if self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
                     {
+                        self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
+                        self.preprocessor.makeFullFiltration(sensorData: watchData)
                         DataManager.connectSensorsDataAndSaveAll(fileName: "AllSensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                     }
+                    /* Testing preprocessor
+                    if self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
+                    {
+                        DataManager.connectSensorsDataAndSaveAll(fileName: "Before_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                        self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
+                        self.preprocessor.makeFullFiltration(sensorData: watchData)
+                        DataManager.connectSensorsDataAndSaveAll(fileName: "After_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                    }*/
                     else if self.settingsContainer.bothDevices && !self.settingsContainer.saveAllSensors
                     {
+                        self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
+                        self.preprocessor.makeFullFiltration(sensorData: watchData)
                         DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                     }
                     else if self.settingsContainer.onlyPhone
                     {
+                        self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
                         DataManager.connectSensorsDataAndSaveGyrAccOnlyPhone(fileName: "ISensorsData_\(dateString)", iphoneData: self.sensorDataContainter)
                     }
                     else if self.settingsContainer.onlyWatch
                     {
+                        self.preprocessor.makeFullFiltration(sensorData: watchData)
                         DataManager.connectSensorsDataAndSaveGyrAccOnlyWatch(fileName: "WSensorsData_\(dateString)", watchData: watchData)
                     }
                 }
@@ -142,9 +159,9 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
             self.accLabelY.text = String(format: "%.4f", userAccData!.y)
             self.accLabelZ.text = String(format: "%.4f", userAccData!.z)
             
-            self.attLabelR.text = String(format: "%.4f", attData!.roll)
-            self.attLabelP.text = String(format: "%.4f", attData!.pitch)
-            self.attLabelY.text = String(format: "%.4f", attData!.yaw)
+            self.attLabelR.text = String(format: "%.4f", attData!.x)
+            self.attLabelP.text = String(format: "%.4f", attData!.y)
+            self.attLabelY.text = String(format: "%.4f", attData!.z)
         }
     }
     

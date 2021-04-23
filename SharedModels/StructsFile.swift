@@ -12,10 +12,10 @@ class SensorData: Codable
     let timeStamp: Int64
     let gravData: Cordinates
     let userAccData: Cordinates
-    let attData: AttCordinates
+    let attData: Cordinates
     let rotRateData: Cordinates
     
-    init(timeStamp: Int64, gravData: Cordinates, userAccData: Cordinates, attData: AttCordinates, rotRateData: Cordinates )
+    init(timeStamp: Int64, gravData: Cordinates, userAccData: Cordinates, attData: Cordinates, rotRateData: Cordinates)
     {
         self.timeStamp = timeStamp
         self.gravData = gravData
@@ -27,9 +27,9 @@ class SensorData: Codable
 
 class Cordinates: Codable
 {
-    let x: Double
-    let y: Double
-    let z: Double
+    var x: Double //For attitude data: pitch
+    var y: Double //For attitude data: roll
+    var z: Double //For attitude data: yaw
     
     init(x: Double, y: Double, z: Double)
     {
@@ -37,25 +37,18 @@ class Cordinates: Codable
         self.y = y
         self.z = z
     }
-}
-
-class AttCordinates: Codable
-{
-    let roll: Double
-    let pitch: Double
-    let yaw: Double
     
-    init(roll: Double, pitch: Double, yaw: Double)
+    func resetValue()
     {
-        self.roll = roll
-        self.pitch = pitch
-        self.yaw = yaw
+        self.x = 0
+        self.y = 0
+        self.z = 0
     }
 }
 
 class SettingsContainer: Codable
 {
-    var saveAllSensors: Bool = true
+    var saveAllSensors: Bool = false
     var onlyPhone: Bool = false
     var onlyWatch: Bool = false
     var bothDevices: Bool = true

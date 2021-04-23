@@ -78,7 +78,7 @@ class MotionManager
         
         let userAccData = Cordinates(x: deviceMotion.userAcceleration.x, y: deviceMotion.userAcceleration.y, z: deviceMotion.userAcceleration.z)
 
-        let attData = AttCordinates(roll: deviceMotion.attitude.roll, pitch: deviceMotion.attitude.pitch, yaw: deviceMotion.attitude.yaw)
+        let attData = Cordinates(x: deviceMotion.attitude.roll, y: deviceMotion.attitude.pitch, z: deviceMotion.attitude.yaw)
         
         let rotRateData = Cordinates(x: deviceMotion.rotationRate.x, y: deviceMotion.rotationRate.y, z: deviceMotion.rotationRate.z)
         

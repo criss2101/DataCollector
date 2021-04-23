@@ -36,7 +36,7 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
     var gravData: Cordinates?
     var rotRateData: Cordinates?
     var userAccData: Cordinates?
-    var attData: AttCordinates?
+    var attData: Cordinates?
     var sensorDataContainter: [SensorData] = []
     var settingsContainer = SettingsContainer()
         
@@ -101,9 +101,9 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
             self.accLabelY.setText(String(format: "%.2f", userAccData!.y))
             self.accLabelZ.setText(String(format: "%.2f", userAccData!.z))
             
-            self.attLabelR.setText(String(format: "%.2f", attData!.roll))
-            self.attLabelP.setText(String(format: "%.2f", attData!.pitch))
-            self.attLabelY.setText(String(format: "%.2f", attData!.yaw))
+            self.attLabelR.setText(String(format: "%.2f", attData!.x))
+            self.attLabelP.setText(String(format: "%.2f", attData!.y))
+            self.attLabelY.setText(String(format: "%.2f", attData!.z))
         }
     }
     
