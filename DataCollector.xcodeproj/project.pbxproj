@@ -32,6 +32,8 @@
 		60A3C4E925F5113F00683DAA /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
 		60A3C4F025F518D400683DAA /* StructsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0E19625EAA1770020C631 /* StructsFile.swift */; };
 		60AA239225F8164100540E3B /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6020A08A25E9A3F6004D36E8 /* MotionManager.swift */; };
+		60CE5B86263B59C4004E9AD4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CE5B85263B59C4004E9AD4 /* Extensions.swift */; };
+		60CE5B87263B59C4004E9AD4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CE5B85263B59C4004E9AD4 /* Extensions.swift */; };
 		60CE9AF225FD3EA20074F805 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CE9AF125FD3EA20074F805 /* DataManager.swift */; };
 		60CE9AF325FD3EA20074F805 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CE9AF125FD3EA20074F805 /* DataManager.swift */; };
 /* End PBXBuildFile section */
@@ -106,6 +108,7 @@
 		60784D5E26069637002EEB0D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.2.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		60784D632606964E002EEB0D /* DataCollector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DataCollector.entitlements; sourceTree = "<group>"; };
 		60784D642606964E002EEB0D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.4.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
+		60CE5B85263B59C4004E9AD4 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		60CE9AF125FD3EA20074F805 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		60E0E19625EAA1770020C631 /* StructsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructsFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -256,6 +259,7 @@
 		60CE9AED25FD3E2F0074F805 /* OtherClasses */ = {
 			isa = PBXGroup;
 			children = (
+				60CE5B85263B59C4004E9AD4 /* Extensions.swift */,
 				6020A08A25E9A3F6004D36E8 /* MotionManager.swift */,
 				60CE9AF125FD3EA20074F805 /* DataManager.swift */,
 				6049499426277606007FC3B2 /* Preprocessor.swift */,
@@ -395,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60A3C4F025F518D400683DAA /* StructsFile.swift in Sources */,
+				60CE5B86263B59C4004E9AD4 /* Extensions.swift in Sources */,
 				60CE9AF225FD3EA20074F805 /* DataManager.swift in Sources */,
 				60AA239225F8164100540E3B /* MotionManager.swift in Sources */,
 				60329F28260BE1F600EFEB1E /* OptionsViewController.swift in Sources */,
@@ -412,6 +417,7 @@
 				60190EC825E44E0500CFF045 /* ExtensionDelegate.swift in Sources */,
 				60CE9AF325FD3EA20074F805 /* DataManager.swift in Sources */,
 				6049499626277606007FC3B2 /* Preprocessor.swift in Sources */,
+				60CE5B87263B59C4004E9AD4 /* Extensions.swift in Sources */,
 				60190EC625E44E0500CFF045 /* InterfaceController.swift in Sources */,
 				60190ECA25E44E0500CFF045 /* ComplicationController.swift in Sources */,
 				6020A08B25E9A3F6004D36E8 /* MotionManager.swift in Sources */,

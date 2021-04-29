@@ -97,20 +97,28 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                     {
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
                         self.preprocessor.makeFullFiltration(sensorData: watchData)
+                        
+                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: watchData)
+                        
                         DataManager.connectSensorsDataAndSaveAll(fileName: "AllSensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                     }
-                    /* Testing preprocessor
-                    if self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
+                                        
+                    // Testing preprocessor
+                    /*
+                    if !self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
                     {
-                        DataManager.connectSensorsDataAndSaveAll(fileName: "Before_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "Before_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
                         self.preprocessor.makeFullFiltration(sensorData: watchData)
-                        DataManager.connectSensorsDataAndSaveAll(fileName: "After_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "After_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                     }*/
                     else if self.settingsContainer.bothDevices && !self.settingsContainer.saveAllSensors
                     {
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
                         self.preprocessor.makeFullFiltration(sensorData: watchData)
+                        
+                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: watchData)
+                        
                         DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                     }
                     else if self.settingsContainer.onlyPhone
@@ -128,7 +136,31 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
         }
     }
     
-    //MARK: Functions
+    func updateWatchSettings()
+    {
+            if let data = try? JSONEncoder().encode(settingsContainer)
+            {
+                let path = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                let newFilePath = path?.appendingPathComponent("settingsData")
+                
+                do
+                {
+                    try data.write(to: newFilePath!)
+                }
+                catch
+                {
+                    print("Cannot write to file" + newFilePath!.absoluteString)
+                }
+                session!.transferFile(newFilePath!, metadata: nil)
+            }
+    }
+    
+    func updateSettingInWatch()
+    {
+        updateWatchSettings()
+    }
+    
+    //MARK: Iphone functions
     func updateMotionData(_ motionManager: MotionManager, sensorData: SensorData)
     {
         DispatchQueue.main.async
@@ -163,25 +195,6 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
             self.attLabelP.text = String(format: "%.4f", attData!.y)
             self.attLabelY.text = String(format: "%.4f", attData!.z)
         }
-    }
-    
-    func updateWatchSettings()
-    {
-            if let data = try? JSONEncoder().encode(settingsContainer)
-            {
-                let path = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                let newFilePath = path?.appendingPathComponent("settingsData")
-                
-                do
-                {
-                    try data.write(to: newFilePath!)
-                }
-                catch
-                {
-                    print("Cannot write to file" + newFilePath!.absoluteString)
-                }
-                session!.transferFile(newFilePath!, metadata: nil)
-            }
     }
     
     @IBAction func start()
@@ -223,11 +236,6 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
             vc?.settingsContainer = self.settingsContainer
             vc?.delegate = self
         }
-    }
-    
-    func updateSettingInWatch()
-    {
-        updateWatchSettings()
     }
 }
 

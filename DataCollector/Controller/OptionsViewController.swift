@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol UpdateSettingsDelegate: class
+protocol UpdateSettingsDelegate: AnyObject
 {
     func updateSettingInWatch()
 }

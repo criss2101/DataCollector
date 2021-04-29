@@ -14,6 +14,7 @@ class SensorData: Codable
     let userAccData: Cordinates
     let attData: Cordinates
     let rotRateData: Cordinates
+    var label: Int
     
     init(timeStamp: Int64, gravData: Cordinates, userAccData: Cordinates, attData: Cordinates, rotRateData: Cordinates)
     {
@@ -22,6 +23,7 @@ class SensorData: Codable
         self.userAccData = userAccData
         self.attData = attData
         self.rotRateData = rotRateData
+        self.label = -1
     }
 }
 

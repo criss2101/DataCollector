@@ -9,15 +9,8 @@ import Foundation
 import CoreMotion
 import os.log
 
-extension Date
-{
-    func currentTimeMillis() -> Int64
-    {
-        return Int64(self.timeIntervalSince1970 * 1000)
-    }
-}
 
-protocol MotionManagerDelegate: class
+protocol MotionManagerDelegate: AnyObject
 {
     func updateMotionData(_ motionManager: MotionManager, sensorData: SensorData)
 }
