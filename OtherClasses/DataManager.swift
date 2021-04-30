@@ -30,7 +30,7 @@ class DataManager
             }
         }
         
-        iphoneData.copyLabeling(labeledSensorData: watchData, offset: offset)
+        watchData.copyLabeling(labeledSensorData: iphoneData, offset: offset)
         
         var id = 0
         for ind  in 0...count-1
@@ -75,7 +75,7 @@ class DataManager
             }
         }
         
-        iphoneData.copyLabeling(labeledSensorData: watchData, offset: offset)
+        watchData.copyLabeling(labeledSensorData: iphoneData, offset: offset)
         
         for ind  in 0...count-1
         {

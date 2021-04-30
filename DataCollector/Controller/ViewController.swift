@@ -98,7 +98,7 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
                         self.preprocessor.makeFullFiltration(sensorData: watchData)
                         
-                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: watchData)
+                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
                         
                         DataManager.connectSensorsDataAndSaveAll(fileName: "AllSensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                     }
@@ -117,18 +117,21 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
                         self.preprocessor.makeFullFiltration(sensorData: watchData)
                         
-                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: watchData)
+                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
                         
                         DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                     }
                     else if self.settingsContainer.onlyPhone
                     {
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
+                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
                         DataManager.connectSensorsDataAndSaveGyrAccOnlyPhone(fileName: "ISensorsData_\(dateString)", iphoneData: self.sensorDataContainter)
                     }
                     else if self.settingsContainer.onlyWatch
                     {
                         self.preprocessor.makeFullFiltration(sensorData: watchData)
+                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
+
                         DataManager.connectSensorsDataAndSaveGyrAccOnlyWatch(fileName: "WSensorsData_\(dateString)", watchData: watchData)
                     }
                 }
@@ -204,6 +207,7 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
         motionManager.startMeasurement()
         stopButton.backgroundColor = #colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1)
         startButton.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1)
+        KeyboardInput.text = ""
         
         let startCollectDataOnWatch = ["info" : "START"]
         session?.sendMessage(startCollectDataOnWatch, replyHandler: nil, errorHandler: { (err) in

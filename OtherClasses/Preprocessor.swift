@@ -115,8 +115,8 @@ class Preprocessor
     
     //MARK: Peak segmentation
     var clickedNumTab: [Int] = []
-    let startPosition = 50 //Ignored first 50 samples
-    let windowSizePeak = 50
+    let startPosition = 35 //Ignored first 35 samples
+    let windowSizePeak = 25
     
     func LetsSegmentation(clickedNumTab: String, sensorData: [SensorData])
     {

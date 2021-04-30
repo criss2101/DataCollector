@@ -32,15 +32,32 @@ extension Array where Element == SensorData
 {
     func copyLabeling(labeledSensorData: [SensorData], offset: Int)
     {
-        let count = self.count < labeledSensorData.count ? self.count : labeledSensorData.count
-        
-        for ind in 0..<count
+        if self.count > labeledSensorData.count
         {
-            if ind + offset == self.count || ind == labeledSensorData.count
+            let count = labeledSensorData.count
+            
+            for ind in 0..<count
             {
-                break;
+                if ind + offset == self.count || ind == labeledSensorData.count
+                {
+                    break;
+                }
+                self[ind + offset].label = labeledSensorData[ind].label
             }
-            self[ind + offset].label = labeledSensorData[ind].label
         }
+        else
+        {
+            let count = self.count
+            
+            for ind in 0..<count
+            {
+                if ind + offset == labeledSensorData.count || ind == self.count
+                {
+                    break;
+                }
+                self[ind].label = labeledSensorData[ind + offset].label
+            }
+        }
+
     }
 }
