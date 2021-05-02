@@ -92,7 +92,7 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                     let now = Date()
                     let dateString = dateFormatter.string(from:now)
                     
-                    
+                    /*
                     if self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
                     {
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
@@ -101,17 +101,20 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                         self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
                         
                         DataManager.connectSensorsDataAndSaveAll(fileName: "AllSensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
-                    }
+                    }*/
                                         
                     // Testing preprocessor
-                    /*
+                    
                     if !self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
                     {
+                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
                         DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "Before_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                        
+
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
                         self.preprocessor.makeFullFiltration(sensorData: watchData)
                         DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "After_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
-                    }*/
+                    }
                     else if self.settingsContainer.bothDevices && !self.settingsContainer.saveAllSensors
                     {
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)

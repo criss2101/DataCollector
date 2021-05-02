@@ -16,9 +16,26 @@ class Preprocessor
     
     func makeFullFiltration(sensorData: [SensorData])
     {
+        calibration(sensorData: sensorData)
         lowPassPreprocessor(sensorData: sensorData)
         medianPreprocessor(sensorData: sensorData)
     }
+    
+    //MARK: Calibration
+    func calibration(sensorData: [SensorData])
+    {
+        let meanAccX = sensorData.map({$0.userAccData.x}).reduce(0, +) / Double(sensorData.count)
+        let meanAccY = sensorData.map({$0.userAccData.y}).reduce(0, +) / Double(sensorData.count)
+        let meanAccZ = sensorData.map({$0.userAccData.z}).reduce(0, +) / Double(sensorData.count)
+
+        for data in sensorData
+        {
+            data.userAccData.x = data.userAccData.x - meanAccX
+            data.userAccData.y = data.userAccData.y - meanAccY
+            data.userAccData.z = data.userAccData.z - meanAccZ
+        }
+    }
+    
     
     //MARK: Median filter
     //MedianFilter helper value
@@ -116,7 +133,11 @@ class Preprocessor
     //MARK: Peak segmentation
     var clickedNumTab: [Int] = []
     let startPosition = 35 //Ignored first 35 samples
-    let windowSizePeak = 25
+    let stopPosition = 35 //Ignored last 35 samples
+    
+    let windowSizePeak = 30
+    let stopWindowCorrector = 0
+    let startWindowCorrector = 0
     
     func LetsSegmentation(clickedNumTab: String, sensorData: [SensorData])
     {
@@ -160,7 +181,8 @@ class Preprocessor
         var actualValue = 0.0, prevValue = 0.0, nextValue = 0.0
         var tabOfPeaks: [(Int, Double)] = []
         
-        for ind in 1..<PtAPRtab.count-1
+        //for ind in 1..<PtAPRtab.count-1
+        for ind in self.startPosition..<PtAPRtab.count-self.stopPosition
         {
             actualValue = PtAPRtab[ind]
             prevValue = PtAPRtab[ind - 1]
@@ -219,10 +241,12 @@ class Preprocessor
     
     func saveTabOfPeaksToSensorData(tabOfIndPeaks: [Int], sensorData: [SensorData])
     {
+
         for ind in 0..<tabOfIndPeaks.count
         {
-            let startWindow = (tabOfIndPeaks[ind] - self.windowSizePeak) >= 0 ? (tabOfIndPeaks[ind] - self.windowSizePeak) : 0
-            let stopWindow = (tabOfIndPeaks[ind] + self.windowSizePeak) < sensorData.count ? (tabOfIndPeaks[ind] + self.windowSizePeak) : (sensorData.count - 1)
+            let startWindow = (tabOfIndPeaks[ind] - self.windowSizePeak - self.startWindowCorrector) >= 0 ? (tabOfIndPeaks[ind] - self.windowSizePeak - self.startWindowCorrector) : 0
+            let stopWindow = (tabOfIndPeaks[ind] + self.windowSizePeak + self.stopWindowCorrector) < sensorData.count ?
+                (tabOfIndPeaks[ind] + self.windowSizePeak + self.stopWindowCorrector) : (sensorData.count - 1)
             let clickedBtn = self.clickedNumTab[ind]
             
             for i in startWindow...stopWindow
