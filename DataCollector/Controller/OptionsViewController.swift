@@ -20,6 +20,7 @@ class OptionsViewController: UIViewController
     @IBOutlet weak var switchOnlyPhone: UISwitch!
     @IBOutlet weak var switchOnlyWatch: UISwitch!
     @IBOutlet weak var switchBothDevices: UISwitch!
+    @IBOutlet weak var switchLearningMode: UISwitch!
     var delegate: UpdateSettingsDelegate?
     
     
@@ -33,54 +34,57 @@ class OptionsViewController: UIViewController
     {
         switch sender
         {
-            case switchSaveAllSensor:
-                settingsContainer!.saveAllSensors = sender.isOn
-                if sender.isOn
-                {
-                    switchOnlyWatch.isOn = false
-                    settingsContainer!.onlyWatch = false
-                    switchOnlyPhone.isOn = false
-                    settingsContainer!.onlyPhone = false
-                    switchBothDevices.isOn = true
-                    settingsContainer!.bothDevices = true
-                }
-                break
-            case switchOnlyPhone:
-                settingsContainer!.onlyPhone = sender.isOn
-                if sender.isOn
-                {
-                    switchSaveAllSensor.isOn = false
-                    settingsContainer?.saveAllSensors = false
-                    switchOnlyWatch.isOn = false
-                    settingsContainer!.onlyWatch = false
-                    switchBothDevices.isOn = false
-                    settingsContainer!.bothDevices = false
-                }
-                break
-            case switchOnlyWatch:
-                settingsContainer!.onlyWatch = sender.isOn
-                if sender.isOn
-                {
-                    switchSaveAllSensor.isOn = false
-                    settingsContainer?.saveAllSensors = false
-                    switchOnlyPhone.isOn = false
-                    settingsContainer!.onlyPhone = false
-                    switchBothDevices.isOn = false
-                    settingsContainer!.bothDevices = false
-                }
-                break
-            case switchBothDevices:
-                settingsContainer!.bothDevices = sender.isOn
-                if sender.isOn
-                {
-                    switchOnlyPhone.isOn = false
-                    settingsContainer!.onlyPhone = false
-                    switchOnlyWatch.isOn = false
-                    settingsContainer!.onlyWatch = false
-                }
-                break
-            default:
-                print("This switch is not supported")
+        case switchSaveAllSensor:
+            settingsContainer!.saveAllSensors = sender.isOn
+            if sender.isOn
+            {
+                switchOnlyWatch.isOn = false
+                settingsContainer!.onlyWatch = false
+                switchOnlyPhone.isOn = false
+                settingsContainer!.onlyPhone = false
+                switchBothDevices.isOn = true
+                settingsContainer!.bothDevices = true
+            }
+            break
+        case switchOnlyPhone:
+            settingsContainer!.onlyPhone = sender.isOn
+            if sender.isOn
+            {
+                switchSaveAllSensor.isOn = false
+                settingsContainer?.saveAllSensors = false
+                switchOnlyWatch.isOn = false
+                settingsContainer!.onlyWatch = false
+                switchBothDevices.isOn = false
+                settingsContainer!.bothDevices = false
+            }
+            break
+        case switchOnlyWatch:
+            settingsContainer!.onlyWatch = sender.isOn
+            if sender.isOn
+            {
+                switchSaveAllSensor.isOn = false
+                settingsContainer?.saveAllSensors = false
+                switchOnlyPhone.isOn = false
+                settingsContainer!.onlyPhone = false
+                switchBothDevices.isOn = false
+                settingsContainer!.bothDevices = false
+            }
+            break
+        case switchBothDevices:
+            settingsContainer!.bothDevices = sender.isOn
+            if sender.isOn
+            {
+                switchOnlyPhone.isOn = false
+                settingsContainer!.onlyPhone = false
+                switchOnlyWatch.isOn = false
+                settingsContainer!.onlyWatch = false
+            }
+            break
+        case switchLearningMode:
+            settingsContainer!.learningMode = sender.isOn
+            break
+        default:
+            print("This switch is not supported")
         }
     }
     
@@ -90,6 +94,7 @@ class OptionsViewController: UIViewController
         switchOnlyPhone.isOn = settingsContainer!.onlyPhone
         switchOnlyWatch.isOn = settingsContainer!.onlyWatch
         switchBothDevices.isOn = settingsContainer!.bothDevices
+        switchLearningMode.isOn = settingsContainer!.learningMode
     }
     
     override func viewDidDisappear(_ animated: Bool)

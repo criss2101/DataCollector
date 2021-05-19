@@ -77,7 +77,7 @@ class DataManager
         
         watchData.copyLabeling(labeledSensorData: iphoneData, offset: offset)
         
-        for ind  in 0...count-1
+        for ind in 0...count-1
         {
             if ind + offset == iphoneData.count || ind == watchData.count
             {
@@ -142,5 +142,4 @@ class DataManager
             print(error.localizedDescription)
         }
     }
-
 }

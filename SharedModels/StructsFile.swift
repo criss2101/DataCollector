@@ -54,6 +54,7 @@ class SettingsContainer: Codable
     var onlyPhone: Bool = false
     var onlyWatch: Bool = false
     var bothDevices: Bool = true
+    var learningMode: Bool = false
 }
 
 

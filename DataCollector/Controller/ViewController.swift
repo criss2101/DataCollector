@@ -42,6 +42,7 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
     
     
     var isStarted = false
+    var isDuringSaving = false
     var session: WCSession?
     let motionManager = MotionManager()
     @IBOutlet weak var KeyboardInput: UITextField!
@@ -82,6 +83,7 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
     {
         DispatchQueue.main.async
         {
+            self.isDuringSaving = true
             let data = try? Data(contentsOf: file.fileURL)
             if let watchData = try? JSONDecoder().decode([SensorData].self, from: data!)
             {
@@ -108,12 +110,12 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                     if !self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
                     {
                         self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
-                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "Before_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "Before_\(self.KeyboardInput.text!)_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                         
 
                         self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
                         self.preprocessor.makeFullFiltration(sensorData: watchData)
-                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "After_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "After_\(self.KeyboardInput.text!)_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
                     }
                     else if self.settingsContainer.bothDevices && !self.settingsContainer.saveAllSensors
                     {
@@ -139,6 +141,8 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
                     }
                 }
             }
+            //Show that file is saved
+            self.isDuringSaving = false
         }
     }
     
@@ -205,17 +209,24 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
     
     @IBAction func start()
     {
-        self.sensorDataContainter.removeAll(keepingCapacity: false)
-        isStarted = true
-        motionManager.startMeasurement()
-        stopButton.backgroundColor = #colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1)
-        startButton.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1)
-        KeyboardInput.text = ""
-        
-        let startCollectDataOnWatch = ["info" : "START"]
-        session?.sendMessage(startCollectDataOnWatch, replyHandler: nil, errorHandler: { (err) in
-            print(err.localizedDescription)
-        })
+        if !isDuringSaving
+        {
+            self.sensorDataContainter.removeAll(keepingCapacity: false)
+            isStarted = true
+            motionManager.startMeasurement()
+            stopButton.backgroundColor = #colorLiteral(red: 0.1490196078, green: 0.1490196078, blue: 0.1568627451, alpha: 1)
+            startButton.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.3176470588, alpha: 1)
+            KeyboardInput.text = ""
+            
+            let startCollectDataOnWatch = ["info" : "START"]
+            session?.sendMessage(startCollectDataOnWatch, replyHandler: nil, errorHandler: { (err) in
+                print(err.localizedDescription)
+            })
+        }
+        else
+        {
+            print("Data is currently saving")
+        }
     }
     
     @IBAction func stop()

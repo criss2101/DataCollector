@@ -186,9 +186,9 @@ class InterfaceController: WKInterfaceController, MotionManagerDelegate, WCSessi
         DispatchQueue.main.async
         {
             let data = try? Data(contentsOf: file.fileURL)
-            if let settngsData = try? JSONDecoder().decode(SettingsContainer.self, from: data!)
+            if let settingsData = try? JSONDecoder().decode(SettingsContainer.self, from: data!)
             {
-                self.settingsContainer = settngsData
+                self.settingsContainer = settingsData
             }
         }
     }

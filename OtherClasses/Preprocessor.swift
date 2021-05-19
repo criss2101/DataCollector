@@ -22,7 +22,7 @@ class Preprocessor
     }
     
     //MARK: Calibration
-    func calibration(sensorData: [SensorData])
+    private func calibration(sensorData: [SensorData])
     {
         let meanAccX = sensorData.map({$0.userAccData.x}).reduce(0, +) / Double(sensorData.count)
         let meanAccY = sensorData.map({$0.userAccData.y}).reduce(0, +) / Double(sensorData.count)
@@ -39,9 +39,9 @@ class Preprocessor
     
     //MARK: Median filter
     //MedianFilter helper value
-    let windowSize = 5
+    private let windowSize = 5
     
-    func medianPreprocessor(sensorData: [SensorData])
+    private func medianPreprocessor(sensorData: [SensorData])
     {
         var windowAccX: [Double] = []
         var windowAccY: [Double] = []
@@ -97,10 +97,10 @@ class Preprocessor
     
     //MARK: Low pass filter
     //LowPassFilter helper value
-    let filterFactor: Double = 0.85
-    var helperValues: Cordinates?
+    private let filterFactor: Double = 0.85
+    private var helperValues: Cordinates?
     
-    func lowPassPreprocessor(sensorData: [SensorData])
+    private func lowPassPreprocessor(sensorData: [SensorData])
     {
         for data in sensorData
         {
@@ -118,8 +118,8 @@ class Preprocessor
         }
         helperValues!.resetValue()
     }
-        
-    func lowPassFilter(data: Cordinates)
+    
+    private func lowPassFilter(data: Cordinates)
     {
         helperValues!.x = filterFactor * helperValues!.x + (1.0 - filterFactor) * data.x
         data.x = helperValues!.x
@@ -132,23 +132,24 @@ class Preprocessor
     
     //MARK: Peak segmentation
     var clickedNumTab: [Int] = []
+    var indexOfPeaks: [Int] = [] //For AI
     let startPosition = 35 //Ignored first 35 samples
     let stopPosition = 35 //Ignored last 35 samples
     
     let windowSizePeak = 30
     let stopWindowCorrector = 0
-    let startWindowCorrector = 0
+    let startWindowCorrector = 1 //Beacuse there is window with size 70 not 71
     
     func LetsSegmentation(clickedNumTab: String, sensorData: [SensorData])
     {
         self.clickedNumTab = clickedNumTab.strToIntTab()
         
-        let indexOfPeaks: [Int] = getSegmentInd(sensorData: sensorData)
+        self.indexOfPeaks = getSegmentInd(sensorData: sensorData)
         
-        saveTabOfPeaksToSensorData(tabOfIndPeaks: indexOfPeaks, sensorData: sensorData)
+        saveTabOfPeaksToSensorData(tabOfIndPeaks: self.indexOfPeaks, sensorData: sensorData)
     }
     
-    func getSegmentInd(sensorData: [SensorData]) -> [Int]
+    private func getSegmentInd(sensorData: [SensorData]) -> [Int]
     {
         let numberOfClickedBtn = self.clickedNumTab.count
         var signalMeanTab: [Double] = []
@@ -176,7 +177,7 @@ class Preprocessor
         return getTabOfPeaks(PtAPRtab: PtAPRtab)
     }
     
-    func getTabOfPeaks(PtAPRtab: [Double]) -> [Int]
+    private func getTabOfPeaks(PtAPRtab: [Double]) -> [Int]
     {
         var actualValue = 0.0, prevValue = 0.0, nextValue = 0.0
         var tabOfPeaks: [(Int, Double)] = []
@@ -226,7 +227,7 @@ class Preprocessor
         return resultTab
     }
     
-    func checkIfTooClose(tabOfPeaks: [Int], value: Int) -> Bool
+    private func checkIfTooClose(tabOfPeaks: [Int], value: Int) -> Bool
     {
         for x in tabOfPeaks
         {
@@ -235,16 +236,15 @@ class Preprocessor
                 return true
             }
         }
-
         return false
     }
     
-    func saveTabOfPeaksToSensorData(tabOfIndPeaks: [Int], sensorData: [SensorData])
+    private func saveTabOfPeaksToSensorData(tabOfIndPeaks: [Int], sensorData: [SensorData])
     {
-
+        
         for ind in 0..<tabOfIndPeaks.count
         {
-            let startWindow = (tabOfIndPeaks[ind] - self.windowSizePeak - self.startWindowCorrector) >= 0 ? (tabOfIndPeaks[ind] - self.windowSizePeak - self.startWindowCorrector) : 0
+            let startWindow = (tabOfIndPeaks[ind] - self.windowSizePeak + self.startWindowCorrector) >= 0 ? (tabOfIndPeaks[ind] - self.windowSizePeak + self.startWindowCorrector) : 0
             let stopWindow = (tabOfIndPeaks[ind] + self.windowSizePeak + self.stopWindowCorrector) < sensorData.count ?
                 (tabOfIndPeaks[ind] + self.windowSizePeak + self.stopWindowCorrector) : (sensorData.count - 1)
             let clickedBtn = self.clickedNumTab[ind]
@@ -255,6 +255,83 @@ class Preprocessor
             }
         }
     }
+    
+    func prapareDataForAI(iphoneData: [SensorData], watchData: [SensorData], bothDevice: Bool, onlyPhone: Bool) -> [Double]
+    {
+        var resultTab: [Double] = []
+        var iphoneDataCp = iphoneData
+        
+        
+        //CAPACITY CUT
+        let count = iphoneData.count < watchData.count ? iphoneData.count : watchData.count
+        
+        //Find shift offset
+        var offset = 0
+        for off in 0...count-1
+        {
+            if iphoneData[off].timeStamp >= watchData[0].timeStamp
+            {
+                offset = off
+                break;
+            }
+        }
+        iphoneDataCp.removeSubrange(0..<offset) //iphone sensor data with offset
+        
+        
+        for indOfPeak in self.indexOfPeaks
+        {
+            let startPosition = indOfPeak - self.windowSize + self.startWindowCorrector
+            let stopPosition = indOfPeak + self.windowSize + self.stopWindowCorrector
+            var iphoneTabAccX: [Double] = []
+            var iphoneTabAccY: [Double] = []
+            var iphoneTabAccZ: [Double] = []
+            var iphoneTabRotX: [Double] = []
+            var iphoneTabRotY: [Double] = []
+            var iphoneTabRotZ: [Double] = []
+            var watchTabAccX: [Double] = []
+            var watchTabAccY: [Double] = []
+            var watchTabAccZ: [Double] = []
+            var watchTabRotX: [Double] = []
+            var watchTabRotY: [Double] = []
+            var watchTabRotZ: [Double] = []
+            
+            for ind in startPosition...stopPosition
+            {
+                iphoneTabAccX.append(iphoneDataCp[ind].userAccData.x)
+                iphoneTabAccY.append(iphoneDataCp[ind].userAccData.y)
+                iphoneTabAccZ.append(iphoneDataCp[ind].userAccData.z)
+                iphoneTabRotX.append(iphoneDataCp[ind].rotRateData.x)
+                iphoneTabRotY.append(iphoneDataCp[ind].rotRateData.y)
+                iphoneTabRotZ.append(iphoneDataCp[ind].rotRateData.z)
+                
+                watchTabAccX.append(watchData[ind].userAccData.x)
+                watchTabAccY.append(watchData[ind].userAccData.y)
+                watchTabAccZ.append(watchData[ind].userAccData.z)
+                watchTabRotX.append(watchData[ind].rotRateData.x)
+                watchTabRotY.append(watchData[ind].rotRateData.y)
+                watchTabRotZ.append(watchData[ind].rotRateData.z)
+            }
+            if bothDevice
+            {
+                resultTab.append(iphoneTabAccX + iphoneTabAccY + iphoneTabAccZ + iphoneTabRotX + iphoneTabRotY + iphoneTabRotZ +
+                                watchTabAccX + watchTabAccY + watchTabAccZ + watchTabRotX + watchTabRotY + watchTabRotZ)
+            }
+            else
+            {
+                if onlyPhone
+                {
+                    resultTab.append(iphoneTabAccX + iphoneTabAccY + iphoneTabAccZ + iphoneTabRotX + iphoneTabRotY + iphoneTabRotZ)
+                }
+                else
+                {
+                    resultTab.append(watchTabAccX + watchTabAccY + watchTabAccZ + watchTabRotX + watchTabRotY + watchTabRotZ)
+                }
+            }
+        }
+        return resultTab
+    }
+    
+    
     
 }
 
