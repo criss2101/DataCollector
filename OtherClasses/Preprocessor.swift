@@ -256,9 +256,9 @@ class Preprocessor
         }
     }
     
-    func prapareDataForAI(iphoneData: [SensorData], watchData: [SensorData], bothDevice: Bool, onlyPhone: Bool) -> [Double]
+    func prapareDataForAI(iphoneData: [SensorData], watchData: [SensorData], bothDevice: Bool, onlyPhone: Bool) -> [[Double]]
     {
-        var resultTab: [Double] = []
+        var resultTab: [[Double]] = []
         var iphoneDataCp = iphoneData
         
         
@@ -313,25 +313,33 @@ class Preprocessor
             }
             if bothDevice
             {
-                resultTab.append(iphoneTabAccX + iphoneTabAccY + iphoneTabAccZ + iphoneTabRotX + iphoneTabRotY + iphoneTabRotZ +
-                                watchTabAccX + watchTabAccY + watchTabAccZ + watchTabRotX + watchTabRotY + watchTabRotZ)
+                var mergedTables: [Double] = []
+                mergedTables += iphoneTabAccX; mergedTables += iphoneTabAccY; mergedTables += iphoneTabAccZ;
+                mergedTables += iphoneTabRotX; mergedTables += iphoneTabRotY; mergedTables += iphoneTabRotZ;
+                
+                mergedTables += watchTabAccX; mergedTables += watchTabAccY; mergedTables += watchTabAccZ;
+                mergedTables += watchTabRotX; mergedTables += watchTabRotY; mergedTables += watchTabRotZ;
+                resultTab.append(mergedTables)
             }
             else
             {
+                var mergedTables: [Double] = []
                 if onlyPhone
                 {
-                    resultTab.append(iphoneTabAccX + iphoneTabAccY + iphoneTabAccZ + iphoneTabRotX + iphoneTabRotY + iphoneTabRotZ)
+                    mergedTables += iphoneTabAccX; mergedTables += iphoneTabAccY; mergedTables += iphoneTabAccZ;
+                    mergedTables += iphoneTabRotX; mergedTables += iphoneTabRotY; mergedTables += iphoneTabRotZ;
+                    resultTab.append(mergedTables)
                 }
                 else
                 {
-                    resultTab.append(watchTabAccX + watchTabAccY + watchTabAccZ + watchTabRotX + watchTabRotY + watchTabRotZ)
+                    mergedTables += watchTabAccX; mergedTables += watchTabAccY; mergedTables += watchTabAccZ;
+                    mergedTables += watchTabRotX; mergedTables += watchTabRotY; mergedTables += watchTabRotZ;
+                    resultTab.append(mergedTables)
                 }
             }
         }
         return resultTab
     }
-    
-    
-    
+        
 }
 

@@ -89,62 +89,83 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
             {
                 if !self.sensorDataContainter.isEmpty && !watchData.isEmpty
                 {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
-                    let now = Date()
-                    let dateString = dateFormatter.string(from:now)
-                    
-                    /*
-                    if self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
+                    if self.settingsContainer.learningMode
                     {
-                        self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
-                        self.preprocessor.makeFullFiltration(sensorData: watchData)
-                        
-                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
-                        
-                        DataManager.connectSensorsDataAndSaveAll(fileName: "AllSensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
-                    }*/
-                                        
-                    // Testing preprocessor
-                    
-                    if !self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
+                        self.learningMode(iphoneData: self.sensorDataContainter, watchData: watchData)
+                    }
+                    else
                     {
-                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
-                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "Before_\(self.KeyboardInput.text!)_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
-                        
+                        self.aiMode(iphoneData: self.sensorDataContainter, watchData: watchData)
+                    }
 
-                        self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
-                        self.preprocessor.makeFullFiltration(sensorData: watchData)
-                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "After_\(self.KeyboardInput.text!)_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
-                    }
-                    else if self.settingsContainer.bothDevices && !self.settingsContainer.saveAllSensors
-                    {
-                        self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
-                        self.preprocessor.makeFullFiltration(sensorData: watchData)
-                        
-                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
-                        
-                        DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "SensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
-                    }
-                    else if self.settingsContainer.onlyPhone
-                    {
-                        self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
-                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
-                        DataManager.connectSensorsDataAndSaveGyrAccOnlyPhone(fileName: "ISensorsData_\(dateString)", iphoneData: self.sensorDataContainter)
-                    }
-                    else if self.settingsContainer.onlyWatch
-                    {
-                        self.preprocessor.makeFullFiltration(sensorData: watchData)
-                        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
-
-                        DataManager.connectSensorsDataAndSaveGyrAccOnlyWatch(fileName: "WSensorsData_\(dateString)", watchData: watchData)
-                    }
                 }
             }
             //Show that file is saved
             self.isDuringSaving = false
         }
     }
+    
+    func aiMode(iphoneData: [SensorData], watchData: [SensorData])
+    {
+        var preparedData: [[Double]] = preprocessor.prapareDataForAI(iphoneData: iphoneData, watchData: watchData, bothDevice: self.settingsContainer.bothDevices, onlyPhone: self.settingsContainer.onlyPhone)
+        
+        var test = 0
+        
+    }
+    
+    func learningMode(iphoneData: [SensorData], watchData: [SensorData])
+    {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+            let now = Date()
+            let dateString = dateFormatter.string(from:now)
+            
+            /*
+            if self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
+            {
+                self.preprocessor.makeFullFiltration(sensorData: self.sensorDataContainter)
+                self.preprocessor.makeFullFiltration(sensorData: watchData)
+                
+                self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: self.sensorDataContainter)
+                
+                DataManager.connectSensorsDataAndSaveAll(fileName: "AllSensorsData_\(dateString)", iphoneData: self.sensorDataContainter, watchData: watchData)
+            }*/
+                                
+            // Testing preprocessor
+            
+            if !self.settingsContainer.saveAllSensors && !self.settingsContainer.onlyWatch && !self.settingsContainer.onlyPhone
+            {
+                self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: iphoneData)
+                DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "Before_\(self.KeyboardInput.text!)_\(dateString)", iphoneData: iphoneData, watchData: watchData)
+                
+
+                self.preprocessor.makeFullFiltration(sensorData: iphoneData)
+                self.preprocessor.makeFullFiltration(sensorData: watchData)
+                DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "After_\(self.KeyboardInput.text!)_\(dateString)", iphoneData: iphoneData, watchData: watchData)
+            }
+            else if self.settingsContainer.bothDevices && !self.settingsContainer.saveAllSensors
+            {
+                self.preprocessor.makeFullFiltration(sensorData: iphoneData)
+                self.preprocessor.makeFullFiltration(sensorData: watchData)
+                
+                self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: iphoneData)
+                
+                DataManager.connectSensorsDataAndSaveGyrAcc(fileName: "SensorsData_\(dateString)", iphoneData: iphoneData, watchData: watchData)
+            }
+            else if self.settingsContainer.onlyPhone
+            {
+                self.preprocessor.makeFullFiltration(sensorData: iphoneData)
+                self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: iphoneData)
+                DataManager.connectSensorsDataAndSaveGyrAccOnlyPhone(fileName: "ISensorsData_\(dateString)", iphoneData: iphoneData)
+            }
+            else if self.settingsContainer.onlyWatch
+            {
+                self.preprocessor.makeFullFiltration(sensorData: watchData)
+                self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: iphoneData)
+
+                DataManager.connectSensorsDataAndSaveGyrAccOnlyWatch(fileName: "WSensorsData_\(dateString)", watchData: watchData)
+            }
+        }
     
     func updateWatchSettings()
     {
