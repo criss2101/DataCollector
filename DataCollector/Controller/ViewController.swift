@@ -107,6 +107,10 @@ class ViewController: UIViewController, WCSessionDelegate, MotionManagerDelegate
     
     func aiMode(iphoneData: [SensorData], watchData: [SensorData])
     {
+        self.preprocessor.LetsSegmentation(clickedNumTab: self.KeyboardInput.text!, sensorData: iphoneData)
+        self.preprocessor.makeFullFiltration(sensorData: iphoneData)
+        self.preprocessor.makeFullFiltration(sensorData: watchData)
+        
         var preparedData: [[Double]] = preprocessor.prapareDataForAI(iphoneData: iphoneData, watchData: watchData, bothDevice: self.settingsContainer.bothDevices, onlyPhone: self.settingsContainer.onlyPhone)
         
         var test = 0

@@ -280,8 +280,8 @@ class Preprocessor
         
         for indOfPeak in self.indexOfPeaks
         {
-            let startPosition = indOfPeak - self.windowSize + self.startWindowCorrector
-            let stopPosition = indOfPeak + self.windowSize + self.stopWindowCorrector
+            let startPosition = indOfPeak - self.windowSizePeak + self.startWindowCorrector
+            let stopPosition = indOfPeak + self.windowSizePeak + self.stopWindowCorrector
             var iphoneTabAccX: [Double] = []
             var iphoneTabAccY: [Double] = []
             var iphoneTabAccZ: [Double] = []
